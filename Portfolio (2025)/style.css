@@ -1,0 +1,153 @@
+:root {
+  --color-title: #003144;
+  --color-body: #4C595D;
+  --font-primary: 'Inter', sans-serif;
+}
+
+body{
+  margin-left: 300px;
+  margin-right: 300px;
+  
+}
+
+h4{
+  margin: 0;
+}
+
+.hero-section{
+ font-family: var(--font-primary);
+ margin: 40px;
+ width: 100%;
+ text-align: left;
+}
+
+
+p{
+  margin: 0;
+  font-weight: 300;
+  color: var(--color-body);
+  width: 70%;
+  text-align: left;
+}
+
+
+.hero-title{
+  font-size: 2rem;
+  font-weight: 600;
+ margin-bottom: 0;
+ color: var(--color-title);
+ padding-top: 80px;
+}
+
+
+.hero-description{
+  font-size: 16px;
+  font-weight: 300;
+  margin-top: 4px;
+  margin-bottom: 24px;
+}
+
+.current-location{
+  font-weight: bold;
+}
+
+.current-work{
+  font-weight: 500;
+  color: var(--color-title);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.current-work:hover {
+  text-decoration: underline;
+}
+
+.hero-body{
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  color: var(--color-body);
+  width: 100%
+  ;
+}
+.projects-section{
+  font-family: var(--font-primary);
+ margin: 40px;
+ text-align: left;
+ color: var(--color-title);
+}
+
+.project-title{
+  font-family: var(--font-primary);
+  color: var(--color-title);
+  font-weight: 700;
+  font-size: 24px;
+
+}
+
+.projects-container{
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  margin-bottom: 24px;
+  align-items: flex-start;
+}
+
+.individual-project{
+  display: flex;
+  flex-direction: column;
+  width: 700px;
+  gap: 12px;
+  
+}
+
+.ind-proj-title{
+  font-family: var(--font-primary);
+  font-weight: 500;
+  color: var(--color-title);
+  font-size: 16px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.ind-proj-body{
+  font-family: var(--font-primary);
+  font-size: 16px;
+  color: var(--color-body);
+  width: 100%;
+}
+
+.project-link {
+  text-decoration: none;
+  color: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+}
+
+.project-link:hover {
+  text-decoration: underline;
+}
+.footer{
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-content: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 40px;
+  
+  
+}
+
+.footer a {
+  color: #4C595D;
+  font-family: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
