@@ -1,0 +1,372 @@
+.project-page {
+  display: flex;
+  min-height: 100vh;
+  background: #F0F9FF;
+}
+
+.project-sidebar {
+  width: 45vw;
+  background: #000000;
+  color: #ffffff;
+  padding: 80px 48px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+  text-decoration: none;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 14px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.back-link:hover {
+  opacity: 1;
+}
+
+.project-detail-title {
+  font-family: var(--font-sentient), Georgia, serif;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin: 0 0 16px 0;
+}
+
+.project-detail-meta {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 14px;
+  opacity: 0.6;
+  margin: 0 0 32px 0;
+}
+
+.project-detail-description {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0 0 64px 0;
+  opacity: 0.9;
+}
+
+.project-section {
+  margin-bottom: 56px;
+  transition: opacity 0.3s ease;
+}
+
+.project-section h2 {
+  font-family: var(--font-sentient), Georgia, serif;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 20px 0;
+}
+
+.project-section p {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  opacity: 0.8;
+  margin: 0 0 16px 0;
+}
+
+.italic-note {
+  font-style: italic;
+  opacity: 0.7;
+  transition: all 0.4s ease;
+  padding: 12px 16px;
+  border-left: 2px solid transparent;
+}
+
+.italic-note.highlighted {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border-left-color: #DC6803;
+}
+
+.project-impact-list {
+  list-style-type: disc;
+  padding-left: 20px;
+  opacity: 0.8;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.project-impact-list li {
+  margin-bottom: 12px;
+}
+
+.project-divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 64px 0;
+  width: 100%;
+  position: relative;
+}
+
+.project-divider::before,
+.project-divider::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  width: 1px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.project-divider::before {
+  left: 0;
+}
+
+.project-divider::after {
+  right: 0;
+}
+
+.project-content {
+  margin-left: 45vw;
+  flex: 1;
+  padding: 20px;
+  background: #F0F9FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.media-control-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.project-content:hover .media-control-overlay {
+  opacity: 1;
+}
+
+.media-control-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: all;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.media-control-btn:hover {
+  background: rgba(0, 0, 0, 0.65);
+  transform: scale(1.08);
+}
+
+.media-control-btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.project-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F0F9FF;
+}
+
+.project-detail-image-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F0F9FF;
+}
+
+.project-screenshot {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+/* Responsive Styles */
+
+/* Desktop: back-link is now outside the aside, overlay it in the sidebar padding area */
+.back-link {
+  position: fixed;
+  top: 52px;
+  left: 48px;
+  z-index: 30;
+}
+
+@media (max-width: 1200px) {
+  .back-link {
+    left: 40px;
+    top: 44px;
+  }
+
+  .project-sidebar {
+    width: 380px;
+    padding: 64px 40px;
+  }
+
+  .project-content {
+    margin-left: 380px;
+    padding: 48px;
+  }
+}
+
+@media (max-width: 900px) {
+  .back-link {
+    left: 36px;
+    top: 40px;
+  }
+
+  .project-sidebar {
+    width: 50vw;
+    padding: 60px 28px;
+  }
+
+  .project-content {
+    margin-left: 50vw;
+  }
+
+  .project-detail-title {
+    font-size: 32px;
+  }
+}
+
+/* ── Mobile: stacked layout ── */
+@media (max-width: 768px) {
+
+  /* Back button: full-width fixed top bar */
+  .back-link {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 52px;
+    padding: 0 20px;
+    background: #000000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 100;
+    margin-bottom: 0;
+  }
+
+  /* Media panel: fixed strip just below the back button */
+  .project-content {
+    position: fixed;
+    top: 52px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 220px;
+    margin-left: 0;
+    padding: 8px;
+    z-index: 50;
+    overflow: hidden;
+  }
+
+  /* Text sidebar: fixed scrollable panel below media */
+  .project-sidebar {
+    position: fixed;
+    top: 272px;
+    /* 52px back-link + 220px media */
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: calc(100dvh - 272px);
+    padding: 24px 20px 80px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 10;
+  }
+
+  /* Typography tightened for small screen */
+  .project-detail-title {
+    font-size: 22px;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .project-detail-meta {
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+
+  .project-detail-description {
+    font-size: 13px;
+    line-height: 1.55;
+    margin-bottom: 32px;
+  }
+
+  .project-section {
+    margin-bottom: 32px;
+  }
+
+  .project-section h2 {
+    font-size: 14px;
+    letter-spacing: 0.01em;
+    margin-bottom: 8px;
+  }
+
+  .project-section p {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .italic-note {
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+
+  /* Play/pause button always visible on mobile (no hover) */
+  .media-control-overlay {
+    opacity: 1;
+  }
+
+  /* Smaller play/pause button on mobile */
+  .media-control-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .media-control-btn svg {
+    width: 12px;
+    height: 12px;
+  }
+}
