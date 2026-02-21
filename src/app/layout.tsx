@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import { Agentation } from "agentation";
+import PageTransition from "@/components/PageTransition";
 import "./globals.css";
 
 const inter = Inter({
@@ -37,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${sentient.variable} antialiased`}>
-        {children}
+        <PageTransition>{children}</PageTransition>
         {process.env.NODE_ENV === "development" && <Agentation />}
       </body>
     </html>

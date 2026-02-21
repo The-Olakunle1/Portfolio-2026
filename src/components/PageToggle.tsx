@@ -30,7 +30,7 @@ const PageToggle = () => {
                         <motion.span
                             className="toggle-tab-bg"
                             layoutId="activeTab"
-                            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                            transition={{ type: "spring", stiffness: 300, damping: 28 }}
                         />
                     )}
                     <span className="toggle-tab-label">{tab.label}</span>

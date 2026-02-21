@@ -136,9 +136,12 @@ export default function VisualsGrid() {
     useEffect(() => {
         const isMobile = "ontouchstart" in window || window.innerWidth < 900;
         if (isMobile) return;
-        setShowHint(true);
-        const timer = setTimeout(() => setShowHint(false), 2000);
-        return () => clearTimeout(timer);
+        const showTimer = setTimeout(() => setShowHint(true), 600);
+        const hideTimer = setTimeout(() => setShowHint(false), 2600);
+        return () => {
+            clearTimeout(showTimer);
+            clearTimeout(hideTimer);
+        };
     }, []);
 
     return (
