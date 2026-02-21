@@ -8,7 +8,7 @@ import {
     useMotionValueEvent,
 } from "motion/react";
 import Image from "next/image";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import "../../projects/self-serve-returns/page.css";
 
 // Indices that have video assets (5 = static jpg)
@@ -37,7 +37,16 @@ export default function ProjectPage() {
     const sidebarRef = useRef<HTMLElement>(null);
     const [activeImageIndex, setActiveImageIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
+    const [showControls, setShowControls] = useState(false);
+    const hideTimerRef = useRef<ReturnType<typeof setTimeout>>(null);
     const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+    // Auto-hide media controls after 2.5s
+    const flashControls = useCallback(() => {
+        setShowControls(true);
+        if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+        hideTimerRef.current = setTimeout(() => setShowControls(false), 2500);
+    }, []);
 
     // Reset pause state when scroll moves to a new asset
     useEffect(() => {
@@ -236,10 +245,10 @@ export default function ProjectPage() {
             </aside>
 
             {/* Right Content Area */}
-            <div className="project-content">
+            <div className="project-content" onClick={flashControls}>
                 {/* Play/Pause overlay - visible on hover, only for video assets */}
                 {VIDEO_INDICES.has(activeImageIndex) && (
-                    <div className="media-control-overlay">
+                    <div className={`media-control-overlay${showControls ? " visible" : ""}`}>
                         <button
                             className="media-control-btn"
                             onClick={() => setIsPaused((p) => !p)}

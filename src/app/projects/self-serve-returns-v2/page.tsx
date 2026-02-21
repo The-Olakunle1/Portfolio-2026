@@ -8,7 +8,7 @@ import {
   useMotionValueEvent,
 } from "motion/react";
 import Image from "next/image";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import "../self-serve-returns/page.css";
 
 const VIDEO_INDICES = new Set([2, 3]);
@@ -38,6 +38,15 @@ export default function ProjectPage() {
   const refundSwitchVideoRef = useRef<HTMLVideoElement>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [showControls, setShowControls] = useState(false);
+  const hideTimerRef = useRef<ReturnType<typeof setTimeout>>(null);
+
+  // Auto-hide media controls after 2.5s
+  const flashControls = useCallback(() => {
+    setShowControls(true);
+    if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    hideTimerRef.current = setTimeout(() => setShowControls(false), 2500);
+  }, []);
 
   // Reset pause on scroll; control exchange video
   useEffect(() => {
@@ -221,10 +230,10 @@ export default function ProjectPage() {
       </aside>
 
       {/* Right Content Area */}
-      <div className="project-content">
+      <div className="project-content" onClick={flashControls}>
         {/* Play/Pause overlay */}
         {VIDEO_INDICES.has(activeImageIndex) && (
-          <div className="media-control-overlay">
+          <div className={`media-control-overlay${showControls ? " visible" : ""}`}>
             <button
               className="media-control-btn"
               onClick={() => setIsPaused((p) => !p)}

@@ -287,29 +287,28 @@
     margin-bottom: 0;
   }
 
-  /* Media panel: fixed strip just below the back button */
+  /* Media panel: fixed strip just below the back button — 40% of viewport */
   .project-content {
     position: fixed;
     top: 52px;
     left: 0;
     right: 0;
     width: 100%;
-    height: 220px;
+    height: 40vh;
     margin-left: 0;
     padding: 8px;
     z-index: 50;
     overflow: hidden;
   }
 
-  /* Text sidebar: fixed scrollable panel below media */
+  /* Text sidebar: fixed scrollable panel below media — remaining space */
   .project-sidebar {
     position: fixed;
-    top: 272px;
-    /* 52px back-link + 220px media */
+    top: calc(52px + 40vh);
     left: 0;
     right: 0;
     width: 100%;
-    height: calc(100dvh - 272px);
+    height: calc(100dvh - 52px - 40vh);
     padding: 24px 20px 80px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -354,8 +353,13 @@
     padding: 10px 12px;
   }
 
-  /* Play/pause button always visible on mobile (no hover) */
+  /* Play/pause button: hidden by default, shown on tap via .visible class */
   .media-control-overlay {
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .media-control-overlay.visible {
     opacity: 1;
   }
 
