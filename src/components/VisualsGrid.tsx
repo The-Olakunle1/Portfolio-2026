@@ -43,30 +43,44 @@ const VideoCard = ({
     const videoRef = useRef<HTMLVideoElement>(null);
     const cardRef = useRef<HTMLDivElement>(null);
     const [isMobile, setIsMobile] = useState(false);
+    const [isNearViewport, setIsNearViewport] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
         setIsMobile("ontouchstart" in window || window.innerWidth < 900);
     }, []);
 
-    // Mobile: autoplay when visible via IntersectionObserver
+    // Lazy mount: only render <video> when card is near viewport (200px margin)
     useEffect(() => {
-        if (!isMobile || !videoRef.current || !cardRef.current) return;
-
-        const vid = videoRef.current;
+        if (!cardRef.current) return;
         const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    vid.play().catch(() => { });
-                } else {
-                    vid.pause();
-                }
-            },
+            ([entry]) => setIsNearViewport(entry.isIntersecting),
+            { rootMargin: "200px" }
+        );
+        observer.observe(cardRef.current);
+        return () => observer.disconnect();
+    }, []);
+
+    // Mobile autoplay: play/pause based on actual visibility (50% threshold)
+    useEffect(() => {
+        if (!isMobile || !cardRef.current) return;
+        const observer = new IntersectionObserver(
+            ([entry]) => setIsVisible(entry.isIntersecting),
             { threshold: 0.5 }
         );
-
         observer.observe(cardRef.current);
         return () => observer.disconnect();
     }, [isMobile]);
+
+    // Control playback on mobile
+    useEffect(() => {
+        if (!isMobile || !videoRef.current) return;
+        if (isVisible) {
+            videoRef.current.play().catch(() => { });
+        } else {
+            videoRef.current.pause();
+        }
+    }, [isVisible, isMobile]);
 
     return (
         <div
@@ -92,16 +106,20 @@ const VideoCard = ({
                 }
             }}
         >
-            <video
-                ref={videoRef}
-                className="visuals-video"
-                muted
-                loop
-                playsInline
-                preload="metadata"
-            >
-                <source src={video.src} type="video/mp4" />
-            </video>
+            {isNearViewport ? (
+                <video
+                    ref={videoRef}
+                    className="visuals-video"
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                >
+                    <source src={video.src} type="video/mp4" />
+                </video>
+            ) : (
+                <div className="visuals-video" />
+            )}
             <div className="visuals-card-label">{video.label}</div>
         </div>
     );
