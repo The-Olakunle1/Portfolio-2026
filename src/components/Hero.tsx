@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import DistortionText from "./DistortionText";
 import PastWorks from "./PastWorks";
 import Articles from "./Articles";
+import PageToggle from "./PageToggle";
 
 const EMAIL = "Alabiolakunledaniel@gmail.com";
 
@@ -63,6 +64,7 @@ const Hero = () => {
   return (
     <>
       <section className="hero">
+        <PageToggle />
         <div className="hero-container">
           {/* Left Column */}
           <motion.div
