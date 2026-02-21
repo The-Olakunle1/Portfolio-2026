@@ -151,15 +151,15 @@ export default function DistortionText({ children }: DistortionTextProps) {
 
       scene.add(new THREE.Points(geometry, material));
 
-      // Detect touch/mobile — no hover events, so we auto-animate
-      const isMobile = "ontouchstart" in window || window.innerWidth < 900;
+      // Track whether the mouse is actively hovering
+      let isMouseActive = false;
 
       const animate = () => {
         if (materialRef.current) {
           materialRef.current.uniforms.uTime.value += 0.016;
 
-          // On mobile: sweep uMouse in a slow elliptical path for automatic distortion
-          if (isMobile) {
+          // Auto-animate when the mouse is NOT hovering (all devices)
+          if (!isMouseActive) {
             const t = materialRef.current.uniforms.uTime.value;
             materialRef.current.uniforms.uMouse.value.set(
               Math.sin(t * 0.4) * canvasW * 0.35,
@@ -174,19 +174,21 @@ export default function DistortionText({ children }: DistortionTextProps) {
       };
       animate();
 
-      // Mouse events
+      // Mouse events — override auto-animation while hovering
       const getCoords = (e: MouseEvent) => {
         const r = textElement.getBoundingClientRect();
         return { x: e.clientX - r.left - canvasW / 2, y: -(e.clientY - r.top - canvasH / 2) };
       };
       const onMove = (e: MouseEvent) => {
+        isMouseActive = true;
         if (materialRef.current) {
           const { x, y } = getCoords(e);
           materialRef.current.uniforms.uMouse.value.set(x, y);
         }
       };
       const onLeave = () => {
-        if (materialRef.current) materialRef.current.uniforms.uMouse.value.set(-1000, -1000);
+        isMouseActive = false;
+        // Auto-animation picks back up on the next frame
       };
 
       container.addEventListener("mousemove", onMove);
