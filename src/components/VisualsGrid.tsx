@@ -75,9 +75,36 @@ const VideoCard = ({
     cardH: number;
 }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
+    const cardRef = useRef<HTMLDivElement>(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        setIsMobile("ontouchstart" in window || window.innerWidth < 900);
+    }, []);
+
+    // Mobile: autoplay when visible via IntersectionObserver
+    useEffect(() => {
+        if (!isMobile || !videoRef.current || !cardRef.current) return;
+
+        const vid = videoRef.current;
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    vid.play().catch(() => { });
+                } else {
+                    vid.pause();
+                }
+            },
+            { threshold: 0.5 }
+        );
+
+        observer.observe(cardRef.current);
+        return () => observer.disconnect();
+    }, [isMobile]);
 
     return (
         <div
+            ref={cardRef}
             className="canvas-card"
             style={{
                 position: "absolute",
@@ -87,13 +114,13 @@ const VideoCard = ({
                 height: cardH,
             }}
             onMouseEnter={() => {
-                if (videoRef.current) {
+                if (!isMobile && videoRef.current) {
                     videoRef.current.currentTime = 0;
                     videoRef.current.play().catch(() => { });
                 }
             }}
             onMouseLeave={() => {
-                if (videoRef.current) {
+                if (!isMobile && videoRef.current) {
                     videoRef.current.pause();
                     videoRef.current.currentTime = 0;
                 }
