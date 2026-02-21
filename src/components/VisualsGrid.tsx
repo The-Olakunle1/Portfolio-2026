@@ -17,51 +17,17 @@ const videos = [
 ];
 
 const GAP = 20;
+const CARD_WIDTH = 607;
+const CARD_HEIGHT = Math.round(CARD_WIDTH * 0.625);
+const COLS = 4;
 
-function useCanvasLayout() {
-    const [layout, setLayout] = useState({
-        cardW: 552,
-        cardH: 345,
-        cols: 4,
-        canvasW: 0,
-        canvasH: 0,
-        positions: [] as { x: number; y: number }[],
-    });
+const cardPositions = videos.map((_, i) => ({
+    x: (i % COLS) * (CARD_WIDTH + GAP),
+    y: Math.floor(i / COLS) * (CARD_HEIGHT + GAP),
+}));
 
-    useEffect(() => {
-        function compute() {
-            const vw = window.innerWidth;
-            let cols: number, cardW: number;
-
-            if (vw <= 600) {
-                cols = 2;
-                cardW = Math.floor((vw - 32 - GAP) / 2); // 16px padding each side
-            } else if (vw <= 900) {
-                cols = 3;
-                cardW = Math.floor((vw - 64 - GAP * 2) / 3);
-            } else {
-                cols = 4;
-                cardW = 607;
-            }
-
-            const cardH = Math.round(cardW * 0.625); // 16:10 ratio
-            const positions = videos.map((_, i) => ({
-                x: (i % cols) * (cardW + GAP),
-                y: Math.floor(i / cols) * (cardH + GAP),
-            }));
-            const canvasW = cols * (cardW + GAP) - GAP;
-            const canvasH = Math.ceil(videos.length / cols) * (cardH + GAP) - GAP;
-
-            setLayout({ cardW, cardH, cols, canvasW, canvasH, positions });
-        }
-
-        compute();
-        window.addEventListener("resize", compute);
-        return () => window.removeEventListener("resize", compute);
-    }, []);
-
-    return layout;
-}
+const CANVAS_WIDTH = COLS * (CARD_WIDTH + GAP) - GAP;
+const CANVAS_HEIGHT = Math.ceil(videos.length / COLS) * (CARD_HEIGHT + GAP) - GAP;
 
 const VideoCard = ({
     video,
@@ -144,7 +110,6 @@ const VideoCard = ({
 export default function VisualsGrid() {
     const [showHint, setShowHint] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
-    const layout = useCanvasLayout();
 
     // Center scroll position on mount (with small delay for layout)
     useEffect(() => {
@@ -157,7 +122,7 @@ export default function VisualsGrid() {
             }
         }, 50);
         return () => clearTimeout(timer);
-    }, [layout]);
+    }, []);
 
     // Desktop hint
     useEffect(() => {
@@ -203,23 +168,21 @@ export default function VisualsGrid() {
             <div
                 className="canvas-content"
                 style={{
-                    width: layout.canvasW,
-                    height: layout.canvasH,
+                    width: CANVAS_WIDTH,
+                    height: CANVAS_HEIGHT,
                     position: "relative",
                 }}
             >
-                {layout.positions.length > 0 &&
-                    videos.map((video, index) => (
-                        <VideoCard
-                            key={video.src}
-                            video={video}
-                            pos={layout.positions[index]}
-                            cardW={layout.cardW}
-                            cardH={layout.cardH}
-                        />
-                    ))}
+                {videos.map((video, index) => (
+                    <VideoCard
+                        key={video.src}
+                        video={video}
+                        pos={cardPositions[index]}
+                        cardW={CARD_WIDTH}
+                        cardH={CARD_HEIGHT}
+                    />
+                ))}
             </div>
         </div>
     );
 }
-
