@@ -287,14 +287,14 @@
     margin-bottom: 0;
   }
 
-  /* Media panel: fixed strip just below the back button — 40% of viewport */
+  /* Media panel: fixed strip just below the back button — 50% of viewport */
   .project-content {
     position: fixed;
     top: 52px;
     left: 0;
     right: 0;
     width: 100%;
-    height: 40vh;
+    height: 50vh;
     margin-left: 0;
     padding: 8px;
     z-index: 50;
@@ -304,11 +304,11 @@
   /* Text sidebar: fixed scrollable panel below media — remaining space */
   .project-sidebar {
     position: fixed;
-    top: calc(52px + 40vh);
+    top: calc(52px + 50vh);
     left: 0;
     right: 0;
     width: 100%;
-    height: calc(100dvh - 52px - 40vh);
+    height: calc(100dvh - 52px - 50vh);
     padding: 24px 20px 80px;
     overflow-y: auto;
     overflow-x: hidden;
