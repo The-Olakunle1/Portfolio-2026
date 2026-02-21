@@ -8,9 +8,22 @@ const nextConfig: NextConfig = {
     });
     return config;
   },
-  // Silence Turbopack warning as we rely on Webpack for shaders
-  // @ts-ignore - turbopack key is used by Next.js 16 to resolve build conflicts
-  turbopack: {},
+  turbopack: {
+    rules: {
+      '*.glsl': {
+        loaders: ['raw-loader'],
+        as: '*.js',
+      },
+      '*.vert': {
+        loaders: ['raw-loader'],
+        as: '*.js',
+      },
+      '*.frag': {
+        loaders: ['raw-loader'],
+        as: '*.js',
+      },
+    },
+  },
 };
 
 export default nextConfig;
