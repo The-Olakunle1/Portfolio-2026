@@ -713,9 +713,11 @@ body {
 
 @media (max-width: 900px) {
   .infinite-canvas {
+    position: absolute;
+    min-height: 100dvh;
     padding-left: 32px;
     padding-right: 32px;
-    padding-top: 90px;
+    padding-top: 100px;
   }
 }
 
@@ -723,7 +725,7 @@ body {
   .infinite-canvas {
     padding-left: 16px;
     padding-right: 16px;
-    padding-top: 80px;
+    padding-top: 90px;
     padding-bottom: 32px;
   }
 
