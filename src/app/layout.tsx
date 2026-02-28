@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import { Agentation } from "agentation";
 import { Analytics } from "@vercel/analytics/next";
+import { PHProvider } from "./providers";
 import "./globals.css";
 
 const inter = Inter({
@@ -38,9 +39,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${sentient.variable} antialiased`}>
-        {children}
-        <Analytics />
-        {process.env.NODE_ENV === "development" && <Agentation />}
+        <PHProvider>
+          {children}
+          <Analytics />
+          {process.env.NODE_ENV === "development" && <Agentation />}
+        </PHProvider>
       </body>
     </html>
   );
