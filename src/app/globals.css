@@ -248,9 +248,17 @@ body {
 }
 
 .projects-grid {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 80px;
+}
+
+@media (min-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 40px;
+    row-gap: 80px;
+  }
 }
 
 .project-card {
@@ -352,11 +360,10 @@ body {
 
 /* Responsive Styles */
 @media (max-width: 1200px) {
-  .hero-container {
-    padding: 0 120px;
-  }
 
-  .tagline-container {
+  .hero-container,
+  .tagline-container,
+  .past-works-container {
     padding: 0 120px;
   }
 
