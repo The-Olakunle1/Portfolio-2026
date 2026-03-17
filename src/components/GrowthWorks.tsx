@@ -1,60 +1,41 @@
 "use client";
 
 import { motion } from "motion/react";
-import Image from "next/image";
 import Link from "next/link";
-import { useState, useRef } from "react";
 
-interface Project {
+interface GrowthProject {
   id: string;
   title: string;
   description: string;
   role: string;
   company: string;
-  image: string;
-  video?: string;
   link?: string;
 }
 
-const projects: Project[] = [
+const projects: GrowthProject[] = [
   {
     id: "1",
-    title: "Self serve returns v.1",
-    description:
-      "Reducing customer contact by enabling seamless, on-platform return initiation.",
+    title: "Testing trust signals to increase shopping conversion",
+    description: "Driving Add-to-Basket growth by 15% through strategic USP messaging across 5 markets.",
     role: "Product Designer",
     company: "MPB.com",
-    image: "/Project frame 1.png",
-    video: "/SSR 1 recording.mp4",
-    link: "/projects/self-serve-returns",
+    link: "/projects/trust-signals",
   },
   {
     id: "2",
-    title: "Self serve returns v.2",
-    description: "Empowering customers to complete returns end-to-end",
+    title: "Reducing product discovery friction to increase conversion",
+    description: "Redesigning shop navigation from search-first to category-first experience.",
     role: "Product Designer",
     company: "MPB.com",
-    image: "/Returns SSR 2.png",
-    video: "/SSR phase 2 video.mp4",
-    link: "/projects/self-serve-returns-v2",
-  },
-  {
-    id: "3",
-    title: "SwapSpace MVP",
-    description: "Designing for Trust in a members-only home swapping platform",
-    role: "Co-founder & Product Designer",
-    company: "swap-space.com",
-    image: "/Project 3 frame.png",
-    video: "/SwapSpace recording.mp4",
-    link: "/projects/swap-space",
+    link: "/projects/discovery-friction",
   },
 ];
 
-const ProjectCard = ({
+const GrowthProjectCard = ({
   project,
   index,
 }: {
-  project: Project;
+  project: GrowthProject;
   index: number;
 }) => {
   return (
@@ -101,9 +82,9 @@ const ProjectCard = ({
   );
 };
 
-export default function PastWorks() {
+export default function GrowthWorks() {
   return (
-    <section className="past-works-section">
+    <section className="past-works-section" style={{ paddingTop: '0px' }}>
       <div className="past-works-container">
         <motion.h2
           className="past-works-title"
@@ -112,12 +93,12 @@ export default function PastWorks() {
           transition={{ duration: 0.6 }}
           viewport={{ once: false, amount: 0.1 }}
         >
-          Product design projects
+          Growth design and experimentations
         </motion.h2>
 
         <div className="projects-grid">
           {projects.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
+            <GrowthProjectCard key={project.id} project={project} index={index} />
           ))}
         </div>
       </div>
