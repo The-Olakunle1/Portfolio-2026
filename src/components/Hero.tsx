@@ -32,7 +32,7 @@ const Hero = () => {
   });
 
   const bioParagraphs = [
-    "Product Designer based in Brighton, UK.",
+    "I'm Olakunle, Product designer and design engineer experienced in building software experiences from concept to delivery, based in the UK",
     "I am obsessed with the way the web works and crafting great and delightful user experiences for it.",
     <>
       Currently a Product Designer at{" "}
@@ -60,6 +60,7 @@ const Hero = () => {
       a members-only home swapping platform for affordable and sustainable
       travel.
     </>,
+    "Outside of work I build and ship my own products. On iOS and macOS I use SwiftUI, on the web I work in React and Next.js. Recent projects include Calm for macOS and Airstream for iOS.",
   ];
 
   return (
@@ -146,10 +147,10 @@ const Hero = () => {
                   scrollYProgress,
                   [fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd],
                   [
-                    paraIndex === 0 ? "#ffffff" : "var(--text-secondary)", // First starts white
-                    "#ffffff", // Highlighted
-                    "#ffffff", // Stay highlighted
-                    "var(--text-secondary)", // Fade to gray
+                    paraIndex === 0 ? "var(--text-primary)" : "var(--text-secondary)",
+                    "var(--text-primary)",
+                    "var(--text-primary)",
+                    "var(--text-secondary)",
                   ],
                 );
 

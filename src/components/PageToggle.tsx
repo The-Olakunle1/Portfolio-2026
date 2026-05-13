@@ -5,8 +5,8 @@ import Link from "next/link";
 import { motion } from "motion/react";
 
 const tabs = [
-    { key: "case-study", label: "Case studies", href: "/" },
-    { key: "visuals", label: "Visuals", href: "/visuals" },
+    { key: "case-study", label: "Work", href: "/" },
+    { key: "visuals", label: "Cool stuff", href: "/visuals" },
 ];
 
 const PageToggle = () => {

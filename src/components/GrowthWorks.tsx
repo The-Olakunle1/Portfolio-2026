@@ -31,57 +31,6 @@ const projects: GrowthProject[] = [
   },
 ];
 
-const GrowthProjectCard = ({
-  project,
-  index,
-}: {
-  project: GrowthProject;
-  index: number;
-}) => {
-  return (
-    <Link
-      href={project.link || "#"}
-      key={project.id}
-      className="project-card-link"
-    >
-      <motion.div
-        className="project-card"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: index * 0.1 }}
-        viewport={{ once: false, amount: 0.1 }}
-      >
-        <div className="project-info">
-          <div className="project-meta">
-            <h3 className="project-title">{project.title}</h3>
-          </div>
-          <p className="project-description">{project.description}</p>
-          <p className="project-role">
-            {project.role} | {project.company}
-          </p>
-        </div>
-        <div className="project-arrow">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M7 17L17 7M17 7H7M17 7V17"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
-      </motion.div>
-    </Link>
-  );
-};
-
 export default function GrowthWorks() {
   return (
     <section className="past-works-section" style={{ paddingTop: '0px' }}>
@@ -96,9 +45,41 @@ export default function GrowthWorks() {
           Growth design and experimentations
         </motion.h2>
 
-        <div className="projects-grid">
+        <div className="articles-list">
           {projects.map((project, index) => (
-            <GrowthProjectCard key={project.id} project={project} index={index} />
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+            >
+              <Link href={project.link || "#"} className="article-item">
+                <div style={{ flex: 1, paddingRight: 16 }}>
+                  <span className="article-title">{project.title}</span>
+                  <p className="project-role" style={{ marginTop: 4 }}>
+                    {project.role} | {project.company}
+                  </p>
+                </div>
+                <div className="article-arrow">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7 17L17 7M17 7H7M17 7V17"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </div>

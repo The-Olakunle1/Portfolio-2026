@@ -82,7 +82,7 @@ export default function DistortionText({ children }: DistortionTextProps) {
       if (!ctx) return;
       ctx.scale(dpr, dpr);
       ctx.font = fontStr;
-      ctx.fillStyle = "#ffffff";
+      ctx.fillStyle = "#0a0a0a";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
@@ -145,7 +145,7 @@ export default function DistortionText({ children }: DistortionTextProps) {
         fragmentShader,
         transparent: true,
         depthWrite: false,
-        blending: THREE.AdditiveBlending,
+        blending: THREE.NormalBlending,
       });
       materialRef.current = material;
 
@@ -208,12 +208,18 @@ export default function DistortionText({ children }: DistortionTextProps) {
 
     const rafId = requestAnimationFrame(init);
 
-    // Re-initialise on container resize (breakpoint / device rotation)
-    const resizeObserver = new ResizeObserver(() => requestAnimationFrame(init));
-    resizeObserver.observe(container);
+    // Observe the text element (not the container) to avoid a feedback loop:
+    // init() sets container.style.minHeight → ResizeObserver on container fires → init() again…
+    let debounceId: ReturnType<typeof setTimeout> | null = null;
+    const resizeObserver = new ResizeObserver(() => {
+      if (debounceId) clearTimeout(debounceId);
+      debounceId = setTimeout(() => requestAnimationFrame(init), 100);
+    });
+    resizeObserver.observe(textElement);
 
     return () => {
       cancelAnimationFrame(rafId);
+      if (debounceId) clearTimeout(debounceId);
       resizeObserver.disconnect();
       if (cleanupFn) cleanupFn();
     };

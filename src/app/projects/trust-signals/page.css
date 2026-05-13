@@ -1,13 +1,13 @@
 .project-page {
   display: flex;
   min-height: 100vh;
-  background: #f0f9ff;
+  background: #fafafa;
 }
 
 .project-sidebar {
   width: 45vw;
-  background: #000000;
-  color: #ffffff;
+  background: #fafafa;
+  color: #0a0a0a;
   padding: 80px 48px;
   position: fixed;
   top: 0;
@@ -22,7 +22,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #ffffff;
+  color: #0a0a0a;
   text-decoration: none;
   font-family: var(--font-inter), system-ui, sans-serif;
   font-size: 14px;
@@ -52,7 +52,7 @@
   font-size: 14px;
   opacity: 0.8;
   margin: 0 0 32px 0;
-  color: #a3a3a3;
+  color: #52525b;
 }
 
 .project-section {
@@ -93,7 +93,7 @@
   margin-left: 45vw;
   flex: 1;
   padding: 20px;
-  background: #f0f9ff;
+  background: #f0f0f0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -120,7 +120,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f0f9ff;
+  background: #f0f0f0;
 }
 
 .project-screenshot {
@@ -179,8 +179,8 @@
     width: 100%;
     height: 52px;
     padding: 0 20px;
-    background: #000000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: #ffffff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     display: inline-flex;
     align-items: center;
     gap: 8px;

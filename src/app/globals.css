@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --text-primary: #ffffff;
-  --text-secondary: #a1a1aa;
-  --text-tertiary: #98a2b3;
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --text-primary: #0a0a0a;
+  --text-secondary: #52525b;
+  --text-tertiary: #71717a;
 }
 
 * {
@@ -49,9 +49,9 @@ body {
   align-items: center;
   gap: 4px;
   padding: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 100px;
-  background: #0a0a0a;
+  background: #ffffff;
   margin-bottom: 32px;
 }
 
@@ -73,7 +73,7 @@ body {
 .toggle-tab-bg {
   position: absolute;
   inset: 0;
-  background: #ffffff;
+  background: #0a0a0a;
   border-radius: 100px;
   z-index: 0;
 }
@@ -84,7 +84,7 @@ body {
 }
 
 .toggle-tab.active {
-  color: #000000;
+  color: #ffffff;
 }
 
 .toggle-tab:not(.active):hover {
@@ -174,7 +174,7 @@ body {
   /* Assuming this is the intended target for "links in hero bio" */
   color: inherit;
   text-decoration: underline;
-  text-decoration-color: white;
+  text-decoration-color: currentColor;
   text-underline-offset: 3px;
   transition: opacity 0.3s ease;
 }
@@ -261,11 +261,11 @@ body {
   padding: 24px;
   border-radius: 12px;
   background-color: var(--background);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .project-card:hover {
-  background-color: #121212;
+  background-color: #f5f5f5;
 }
 
 .project-info {
@@ -543,6 +543,11 @@ body {
   display: block;
 }
 
+.past-works-section .article-item,
+.past-works-section .article-item:first-child {
+  border-top: none;
+}
+
 /* ── Articles responsive — MUST sit after base .articles-container ── */
 @media (max-width: 1200px) {
   .articles-container {
@@ -587,6 +592,59 @@ body {
   }
 }
 
+/* ── Visuals 2-col Grid ── */
+.visuals-page {
+  background: #e9eaeb;
+  padding: 80px 40px;
+  min-height: 100vh;
+}
+
+.visuals-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.visuals-grid-card {
+  background: #ffffff;
+  border-radius: 32px;
+  height: 540px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+.visuals-grid-card:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.visuals-grid-card .visuals-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.visuals-grid-card .visuals-card-label {
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+}
+
+@media (max-width: 768px) {
+  .visuals-page {
+    padding: 40px 16px;
+  }
+
+  .visuals-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .visuals-grid-card {
+    height: 280px;
+    border-radius: 20px;
+  }
+}
+
 /* ── Infinite Canvas ── */
 .infinite-canvas {
   position: fixed;
@@ -608,14 +666,14 @@ body {
 .canvas-card {
   overflow: hidden;
   border-radius: 12px;
-  background: #161616;
+  background: #f0f0f0;
   cursor: pointer;
   transition: box-shadow 0.3s ease;
 }
 
 .canvas-card:hover {
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15),
-    0 8px 32px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.12),
+    0 8px 32px rgba(0, 0, 0, 0.15);
 }
 
 .visuals-video {
@@ -658,7 +716,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .visuals-hint {
@@ -668,10 +726,10 @@ body {
   gap: 12px;
   padding: 32px 40px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   color: var(--text-primary);
   font-family: var(--font-inter), system-ui, sans-serif;
   font-size: 15px;
