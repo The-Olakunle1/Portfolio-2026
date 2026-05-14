@@ -31,7 +31,7 @@ const gifStyle: React.CSSProperties = {
 const videoStyle: React.CSSProperties = {
   width: "100%",
   height: "100%",
-  objectFit: "cover",
+  objectFit: "contain",
   display: "block",
 };
 
@@ -71,7 +71,7 @@ const MediaCard = ({ item }: { item: MediaItem }) => {
         boxSizing: "border-box",
       }}
     >
-      <div style={{ width: "100%", aspectRatio: "16/10", borderRadius: 24, overflow: "hidden", position: "relative", background: "transparent" }}>
+      <div style={{ width: "100%", aspectRatio: "16/9", borderRadius: 24, overflow: "hidden", position: "relative", background: "#ffffff" }}>
         {item.type === "gif" ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={item.src} alt={item.label} style={gifStyle} />
