@@ -7,6 +7,8 @@ type MediaItem = { src: string; label: string; type: "video" | "gif" };
 const items: MediaItem[] = [
   { src: "/Companion 1.mp4", label: "Companion", type: "video" },
   { src: "/Companion 2.mp4", label: "Companion", type: "video" },
+  { src: "/Airstream 1.mp4", label: "Airstream", type: "video" },
+  { src: "/Airstream 2.mp4", label: "Airstream", type: "video" },
   { src: "/Calm-firstview.mp4", label: "Calm — First View", type: "video" },
   { src: "/Calm-secondview.mp4", label: "Calm — Second View", type: "video" },
   { src: "/Introducing delight.mp4", label: "Moments of Delight", type: "video" },
