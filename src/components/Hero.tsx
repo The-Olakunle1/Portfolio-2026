@@ -32,7 +32,7 @@ const Hero = () => {
   });
 
   const bioParagraphs = [
-    "I'm Olakunle, Product designer and design engineer experienced in building software experiences from concept to delivery, based in the UK",
+    "I'm Olakunle, Product designer and design engineer experienced in building software experiences from concept to delivery, based in the UK.",
     "I am obsessed with the way the web works and crafting great and delightful user experiences for it.",
     <>
       Currently a Product Designer at{" "}
