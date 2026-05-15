@@ -1,7 +1,7 @@
-import VisualsGrid from "@/components/VisualsGrid";
 import PageToggle from "@/components/PageToggle";
+import AppsGrid from "@/components/AppsGrid";
 
-export default function VisualsPage() {
+export default function AppsPage() {
     return (
         <main>
             <div
@@ -20,7 +20,7 @@ export default function VisualsPage() {
                     <PageToggle />
                 </div>
             </div>
-            <VisualsGrid />
+            <AppsGrid />
         </main>
     );
 }

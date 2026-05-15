@@ -42,7 +42,7 @@ export default function GrowthWorks() {
           transition={{ duration: 0.6 }}
           viewport={{ once: false, amount: 0.1 }}
         >
-          Growth design and experimentations
+          Experimentation
         </motion.h2>
 
         <div className="articles-list">

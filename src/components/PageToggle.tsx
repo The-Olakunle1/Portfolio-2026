@@ -7,11 +7,12 @@ import { motion } from "motion/react";
 const tabs = [
     { key: "case-study", label: "Work", href: "/" },
     { key: "visuals", label: "Cool stuff", href: "/visuals" },
+    { key: "apps", label: "Fun apps I build", href: "/apps" },
 ];
 
 const PageToggle = () => {
     const pathname = usePathname();
-    const activeTab = pathname === "/visuals" ? "visuals" : "case-study";
+    const activeTab = pathname === "/visuals" ? "visuals" : pathname === "/apps" ? "apps" : "case-study";
 
     return (
         <motion.div

@@ -48,7 +48,7 @@ export default function Articles() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          Mentioned In & Past writing
+          Writings
         </motion.h2>
 
         <div className="articles-list">

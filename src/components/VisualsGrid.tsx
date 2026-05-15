@@ -107,7 +107,7 @@ export default function VisualsGrid() {
   }, []);
 
   return (
-    <div style={{ background: "#e9eaeb", padding: cols === 1 ? "40px 16px" : "80px 40px", minHeight: "100vh" }}>
+    <div style={{ background: "#e9eaeb", padding: cols === 1 ? "80px 16px 40px" : "100px 40px 80px", minHeight: "100vh" }}>
       <div style={{ display: "grid", gridTemplateColumns: cols === 1 ? "1fr" : "1fr 1fr", gap: 16 }}>
         {items.map((item) => (
           <MediaCard key={item.src} item={item} />

@@ -29,6 +29,36 @@ const projects: Project[] = [
     link: "/projects/self-serve-returns",
   },
   {
+    id: "1b",
+    title: "Order tracking",
+    description: "",
+    role: "Product Designer",
+    company: "MPB.com",
+    image: "",
+    video: "",
+    link: "/projects/order-tracking",
+  },
+  {
+    id: "2b",
+    title: "Calm app",
+    description: "",
+    role: "Product Designer & Design Engineer",
+    company: "Trycalm.app",
+    image: "",
+    video: "",
+    link: "",
+  },
+  {
+    id: "2c",
+    title: "Companion",
+    description: "",
+    role: "Product Designer & Design Engineer",
+    company: "Personal project",
+    image: "",
+    video: "",
+    link: "",
+  },
+  {
     id: "2",
     title: "Self serve returns v.2",
     description: "Empowering customers to complete returns end-to-end",
@@ -61,7 +91,7 @@ export default function PastWorks() {
           transition={{ duration: 0.6 }}
           viewport={{ once: false, amount: 0.1 }}
         >
-          Product design projects
+          Works
         </motion.h2>
 
         <div className="articles-list">
