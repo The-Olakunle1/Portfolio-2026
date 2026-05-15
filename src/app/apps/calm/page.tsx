@@ -209,6 +209,7 @@ export default function CalmPage() {
           <p style={styles.body}>
             You don't have to use it. But once you do, your image library becomes as searchable as everything else.
           </p>
+          <img src="/CalmOS.png" alt="CalmOS" style={styles.imgFull} />
         </div>
       </motion.div>
     </main>
