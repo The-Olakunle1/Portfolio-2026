@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import Link from "next/link";
 
 const cardStyle: React.CSSProperties = {
   background: "#ffffff",
@@ -78,6 +79,7 @@ const AppCard = ({
   subtitle,
   caption,
   videoSrc,
+  href,
 }: {
   icon: string;
   iconGradient: string;
@@ -85,6 +87,7 @@ const AppCard = ({
   subtitle: string;
   caption: string;
   videoSrc: string;
+  href?: string;
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -103,7 +106,7 @@ const AppCard = ({
     return () => observer.disconnect();
   }, []);
 
-  return (
+  const content = (
     <div ref={cardRef} style={cardStyle}>
       <div style={headerStyle}>
         <div style={iconWrapperStyle(iconGradient)}>
@@ -125,6 +128,10 @@ const AppCard = ({
       <p style={captionStyle}>{caption}</p>
     </div>
   );
+
+  return href ? (
+    <Link href={href} style={{ textDecoration: "none", display: "block" }}>{content}</Link>
+  ) : content;
 };
 
 export default function AppsGrid() {
@@ -147,6 +154,7 @@ export default function AppsGrid() {
           subtitle="Your quiet corner of the internet, saved on your mac."
           caption="Personal project built for MacOS using SwiftUI"
           videoSrc="/Calm-onboarding.mp4"
+          href="/apps/calm"
         />
         <AppCard
           icon="/Companion icon.png"

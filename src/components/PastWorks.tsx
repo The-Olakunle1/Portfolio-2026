@@ -46,7 +46,7 @@ const projects: Project[] = [
     company: "Trycalm.app",
     image: "",
     video: "",
-    link: "",
+    link: "/apps/calm",
   },
   {
     id: "2c",
