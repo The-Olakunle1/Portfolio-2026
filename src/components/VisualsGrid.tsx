@@ -37,7 +37,7 @@ const videoStyle: React.CSSProperties = {
   display: "block",
 };
 
-const MediaCard = ({ item }: { item: MediaItem }) => {
+const MediaCard = ({ item, isMobile }: { item: MediaItem; isMobile: boolean }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -65,7 +65,7 @@ const MediaCard = ({ item }: { item: MediaItem }) => {
       ref={cardRef}
       style={{
         background: "#ffffff",
-        borderRadius: 32,
+        borderRadius: isMobile ? 16 : 32,
         height: "fit-content",
         overflow: "hidden",
         position: "relative",
@@ -110,7 +110,7 @@ export default function VisualsGrid() {
     <div style={{ background: "#e9eaeb", padding: cols === 1 ? "80px 16px 40px" : "100px 40px 80px", minHeight: "100vh" }}>
       <div style={{ display: "grid", gridTemplateColumns: cols === 1 ? "1fr" : "1fr 1fr", gap: 16 }}>
         {items.map((item) => (
-          <MediaCard key={item.src} item={item} />
+          <MediaCard key={item.src} item={item} isMobile={cols === 1} />
         ))}
       </div>
     </div>
