@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import { motion } from "motion/react";
 import Link from "next/link";
 
 const cardStyle: React.CSSProperties = {
@@ -13,7 +14,7 @@ const cardStyle: React.CSSProperties = {
 
 const headerStyle: React.CSSProperties = {
   display: "flex",
-  alignItems: "center",
+  alignItems: "flex-start",
   gap: 8,
   marginBottom: 24,
 };
@@ -80,6 +81,7 @@ const AppCard = ({
   caption,
   videoSrc,
   href,
+  isMobile,
 }: {
   icon: string;
   iconGradient: string;
@@ -88,6 +90,7 @@ const AppCard = ({
   caption: string;
   videoSrc: string;
   href?: string;
+  isMobile?: boolean;
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -106,8 +109,10 @@ const AppCard = ({
     return () => observer.disconnect();
   }, []);
 
+  const resolvedCardStyle = { ...cardStyle, borderRadius: isMobile ? 16 : 32 };
+
   const content = (
-    <div ref={cardRef} style={cardStyle}>
+    <div ref={cardRef} style={resolvedCardStyle}>
       <div style={headerStyle}>
         <div style={iconWrapperStyle(iconGradient)}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -129,9 +134,19 @@ const AppCard = ({
     </div>
   );
 
-  return href ? (
+  const wrapped = href ? (
     <Link href={href} style={{ textDecoration: "none", display: "block" }}>{content}</Link>
   ) : content;
+
+  return (
+    <motion.div
+      whileHover={href ? { scale: 1.02 } : undefined}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      style={{ cursor: href ? "pointer" : "default" }}
+    >
+      {wrapped}
+    </motion.div>
+  );
 };
 
 export default function AppsGrid() {
@@ -144,17 +159,20 @@ export default function AppsGrid() {
     return () => window.removeEventListener("resize", update);
   }, []);
 
+  const isMobile = cols === 1;
+
   return (
-    <div style={{ background: "#e9eaeb", padding: cols === 1 ? "80px 16px 40px" : "100px 40px 80px", minHeight: "100vh" }}>
-      <div style={{ display: "grid", gridTemplateColumns: cols === 1 ? "1fr" : "1fr 1fr", gap: 16 }}>
+    <div style={{ background: "#e9eaeb", padding: isMobile ? "80px 16px 40px" : "100px 40px 80px", minHeight: "100vh" }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16 }}>
         <AppCard
           icon="/Calm app icon.png"
           iconGradient="linear-gradient(to right, #f9f8f7, #edeaf6)"
           title="Calm app"
           subtitle="Your quiet corner of the internet, saved on your mac."
           caption="Personal project built for MacOS using SwiftUI"
-          videoSrc="/Calm-onboarding.mp4"
+          videoSrc="/Calm-firstview.mp4"
           href="/apps/calm"
+          isMobile={isMobile}
         />
         <AppCard
           icon="/Companion icon.png"
@@ -163,6 +181,7 @@ export default function AppsGrid() {
           subtitle="Every walk is better with a companion."
           caption="Personal project built for iOS using SwiftUI"
           videoSrc="/Companion 1.mp4"
+          isMobile={isMobile}
         />
       </div>
     </div>
