@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
 import DistortionText from "./DistortionText";
 import PastWorks from "./PastWorks";
+import InActionShowreel from "./InActionShowreel";
 import GrowthWorks from "./GrowthWorks";
 import Articles from "./Articles";
 import PageToggle from "./PageToggle";
@@ -177,6 +178,8 @@ const Hero = () => {
 
       {/* Third Section - Past Works */}
       <PastWorks />
+
+      <InActionShowreel />
 
       {/* Fourth Section - Growth Works */}
       <GrowthWorks />

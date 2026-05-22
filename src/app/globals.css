@@ -237,6 +237,10 @@ body {
   padding: 0 250px;
 }
 
+.in-action-strip {
+  padding-left: 250px;
+}
+
 .past-works-title {
   font-family: var(--font-sentient), serif;
   font-size: 32px;
@@ -333,6 +337,10 @@ body {
     padding: 0 120px;
   }
 
+  .in-action-strip {
+    padding-left: 120px;
+  }
+
   .tagline-text {
     font-size: 40px;
   }
@@ -369,6 +377,10 @@ body {
 
   .past-works-container {
     padding: 0 60px;
+  }
+
+  .in-action-strip {
+    padding-left: 60px;
   }
 
   .past-works-section {
@@ -419,6 +431,10 @@ body {
 
   .past-works-container {
     padding: 0 24px;
+  }
+
+  .in-action-strip {
+    padding-left: 24px;
   }
 
   .past-works-section {

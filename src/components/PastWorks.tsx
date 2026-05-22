@@ -82,7 +82,7 @@ const projects: Project[] = [
 
 export default function PastWorks() {
   return (
-    <section className="past-works-section">
+    <section className="past-works-section" style={{ paddingBottom: 40 }}>
       <div className="past-works-container">
         <motion.h2
           className="past-works-title"
