@@ -13,6 +13,9 @@ const EMAIL = "Alabiolakunledaniel@gmail.com";
 
 const Hero = () => {
   const [copied, setCopied] = useState(false);
+  const [mpbPos, setMpbPos] = useState<{ x: number; y: number } | null>(null);
+  const [swapPos, setSwapPos] = useState<{ x: number; y: number } | null>(null);
+  const [calmPos, setCalmPos] = useState<{ x: number; y: number } | null>(null);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(EMAIL).then(() => {
@@ -42,6 +45,9 @@ const Hero = () => {
         target="_blank"
         rel="noopener noreferrer"
         className="hero-link"
+        onMouseEnter={(e) => setMpbPos({ x: e.clientX, y: e.clientY })}
+        onMouseMove={(e) => setMpbPos({ x: e.clientX, y: e.clientY })}
+        onMouseLeave={() => setMpbPos(null)}
       >
         MPB.com
       </a>
@@ -55,13 +61,30 @@ const Hero = () => {
         target="_blank"
         rel="noopener noreferrer"
         className="hero-link"
+        onMouseEnter={(e) => setSwapPos({ x: e.clientX, y: e.clientY })}
+        onMouseMove={(e) => setSwapPos({ x: e.clientX, y: e.clientY })}
+        onMouseLeave={() => setSwapPos(null)}
       >
         Swap-space.com
       </a>{" "}
       a members-only home swapping platform for affordable and sustainable
       travel.
     </>,
-    "Outside of work I build and ship my own products. On iOS and macOS I use SwiftUI, on the web I work in React and Next.js. Recent projects include Calm for macOS and Airstream for iOS.",
+    <>
+      Outside of work I build and ship my own products. On iOS and macOS I use SwiftUI, on the web I work in React and Next.js. Recent projects include{" "}
+      <a
+        href="https://trycalm.app"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hero-link"
+        onMouseEnter={(e) => setCalmPos({ x: e.clientX, y: e.clientY })}
+        onMouseMove={(e) => setCalmPos({ x: e.clientX, y: e.clientY })}
+        onMouseLeave={() => setCalmPos(null)}
+      >
+        Calm for macOS
+      </a>
+      {" "}and Airstream for iOS.
+    </>,
   ];
 
   return (
@@ -186,6 +209,88 @@ const Hero = () => {
 
       {/* Fifth Section - Articles */}
       <Articles />
+
+      {/* Calm hover image */}
+      {calmPos && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
+          style={{
+            position: "fixed",
+            top: calmPos.y + 20,
+            left: calmPos.x + 20,
+            width: 280,
+            borderRadius: 12,
+            overflow: "hidden",
+            pointerEvents: "none",
+            zIndex: 1000,
+            boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/Calm hover image.png"
+            alt="Calm for macOS"
+            style={{ width: "100%", height: "auto", display: "block" }}
+          />
+        </motion.div>
+      )}
+
+      {/* SwapSpace hover image */}
+      {swapPos && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
+          style={{
+            position: "fixed",
+            top: swapPos.y + 20,
+            left: swapPos.x + 20,
+            width: 280,
+            borderRadius: 12,
+            overflow: "hidden",
+            pointerEvents: "none",
+            zIndex: 1000,
+            boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/SwapSpace hover image.png"
+            alt="Swap-space.com"
+            style={{ width: "100%", height: "auto", display: "block" }}
+          />
+        </motion.div>
+      )}
+
+      {/* MPB hover image */}
+      {mpbPos && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.92 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
+          style={{
+            position: "fixed",
+            top: mpbPos.y + 20,
+            left: mpbPos.x + 20,
+            width: 280,
+            borderRadius: 12,
+            overflow: "hidden",
+            pointerEvents: "none",
+            zIndex: 1000,
+            boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/MPB hover image.png"
+            alt="MPB.com"
+            style={{ width: "100%", height: "auto", display: "block" }}
+          />
+        </motion.div>
+      )}
     </>
   );
 };
