@@ -29,6 +29,9 @@ const sentient = localFont({
 export const metadata: Metadata = {
   title: "Olakunle Alabi | Portfolio",
   description: "Portfolio of Olakunle Alabi",
+  icons: {
+    icon: "/Portfolio favicon.jpeg",
+  },
 };
 
 export default function RootLayout({
