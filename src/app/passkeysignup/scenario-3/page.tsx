@@ -4,10 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 import UsernameScreen from "../screens/UsernameScreen";
 import PasswordCreationScreen from "../screens/PasswordCreationScreen";
+import SuccessPasswordScreen from "../screens/SuccessPasswordScreen";
 
 const STEPS = [
   { id: "username",          label: "Username entry",     Screen: UsernameScreen },
   { id: "password-creation", label: "Password creation",  Screen: PasswordCreationScreen },
+  { id: "success",           label: "Account created",    Screen: SuccessPasswordScreen },
 ];
 
 const SCENARIOS = [
