@@ -5,12 +5,14 @@ import Link from "next/link";
 import UsernameScreen from "../screens/UsernameScreen";
 import SkeletonLoaderScreen from "../screens/SkeletonLoaderScreen";
 import PasswordCreationScreen from "../screens/PasswordCreationScreen";
+import SuccessPasswordScreen from "../screens/SuccessPasswordScreen";
 
-const STEP_IDS = ["username", "skeleton", "password-creation"] as const;
+const STEP_IDS = ["username", "skeleton", "password-creation", "success"] as const;
 const STEP_LABELS: Record<typeof STEP_IDS[number], string> = {
   "username":          "Username entry",
   "skeleton":          "Detecting passkey support…",
   "password-creation": "Password creation",
+  "success":           "Account created",
 };
 
 const SCENARIOS = [
@@ -24,6 +26,7 @@ const SCENARIOS = [
 const ACTIVE = "S4";
 
 const PASSWORD_STEP = 2; // index of PasswordCreationScreen
+const SUCCESS_STEP  = 3; // index of SuccessPasswordScreen
 
 export default function Scenario4() {
   const [step, setStep] = useState(0);
@@ -44,7 +47,9 @@ export default function Scenario4() {
           />
         );
       case "password-creation":
-        return <PasswordCreationScreen />;
+        return <PasswordCreationScreen onNext={() => setStep(SUCCESS_STEP)} />;
+      case "success":
+        return <SuccessPasswordScreen />;
     }
   }
 
