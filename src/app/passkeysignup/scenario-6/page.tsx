@@ -3,14 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import UsernameScreen from "../screens/UsernameScreen";
-import PasswordCreationScreen from "../screens/PasswordCreationScreen";
-import SuccessPasswordScreen from "../screens/SuccessPasswordScreen";
+import PasskeyCreationScreen from "../screens/PasskeyCreationScreen";
+import PasskeyFailedScreen from "../screens/PasskeyFailedScreen";
 
-const STEPS = [
-  { id: "username",          label: "Username entry",     Screen: UsernameScreen },
-  { id: "password-creation", label: "Password creation",  Screen: PasswordCreationScreen },
-  { id: "success",           label: "Account created",    Screen: SuccessPasswordScreen },
-];
+const STEP_IDS = ["username", "passkey-creation", "failed"] as const;
+const STEP_LABELS: Record<typeof STEP_IDS[number], string> = {
+  "username":         "Username entry",
+  "passkey-creation": "Passkey creation",
+  "failed":           "Passkey failed",
+};
 
 const SCENARIOS = [
   { id: "S1", href: "/passkeysignup/scenario-1" },
@@ -21,21 +22,49 @@ const SCENARIOS = [
   { id: "S6", href: "/passkeysignup/scenario-6" },
 ];
 
-const ACTIVE = "S3";
+const ACTIVE = "S6";
 
-export default function Scenario3() {
+export default function Scenario6() {
   const [step, setStep] = useState(0);
+  const [autoTrigger, setAutoTrigger] = useState(false);
 
-  const { label, Screen } = STEPS[step];
   const isFirst = step === 0;
-  const isLast = step === STEPS.length - 1;
+  const isLast  = step === STEP_IDS.length - 1;
+  const label   = STEP_LABELS[STEP_IDS[step]];
+
+  function handleTryAgain() {
+    setAutoTrigger(true);
+    setStep(1);
+  }
+
+  function renderScreen() {
+    switch (STEP_IDS[step]) {
+      case "username":
+        return <UsernameScreen onNext={() => setStep(1)} />;
+      case "passkey-creation":
+        return (
+          <PasskeyCreationScreen
+            key={autoTrigger ? "retry" : "first"}
+            simulateFail
+            autoTrigger={autoTrigger}
+            onFail={() => { setAutoTrigger(false); setStep(2); }}
+          />
+        );
+      case "failed":
+        return (
+          <PasskeyFailedScreen
+            onTryAgain={handleTryAgain}
+          />
+        );
+    }
+  }
 
   return (
     <div style={{ position: "relative", width: "100vw", height: "100vh", overflow: "hidden" }}>
 
       {/* Full-page screen */}
       <div style={{ width: "100%", height: "100%" }}>
-        <Screen onNext={isLast ? undefined : () => setStep(s => s + 1)} />
+        {renderScreen()}
       </div>
 
       {/* Floating prototype bar */}
@@ -66,7 +95,7 @@ export default function Scenario3() {
           ← Back
         </button>
 
-        <span style={{ fontSize: 12, color: "#aaa" }}>{step + 1}/{STEPS.length}</span>
+        <span style={{ fontSize: 12, color: "#aaa" }}>{step + 1}/{STEP_IDS.length}</span>
 
         <button disabled={isLast} onClick={() => setStep(s => s + 1)}
           style={{ padding: "5px 12px", borderRadius: 100, fontSize: 12, fontWeight: 500, background: isLast ? "transparent" : "#111", border: "none", cursor: isLast ? "default" : "pointer", color: isLast ? "#aaa" : "#fff", opacity: isLast ? 0.5 : 1 }}>

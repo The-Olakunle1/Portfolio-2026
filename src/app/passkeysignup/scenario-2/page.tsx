@@ -3,13 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import UsernameScreen from "../screens/UsernameScreen";
-import PasswordCreationScreen from "../screens/PasswordCreationScreen";
-import SuccessPasswordScreen from "../screens/SuccessPasswordScreen";
+import SkeletonLoaderScreen from "../screens/SkeletonLoaderScreen";
+import PasskeyCreationScreen from "../screens/PasskeyCreationScreen";
+import SuccessPasskeyScreen from "../screens/SuccessPasskeyScreen";
 
 const STEPS = [
-  { id: "username",          label: "Username entry",     Screen: UsernameScreen },
-  { id: "password-creation", label: "Password creation",  Screen: PasswordCreationScreen },
-  { id: "success",           label: "Account created",    Screen: SuccessPasswordScreen },
+  { id: "username",         label: "Username entry",  Screen: UsernameScreen },
+  { id: "skeleton",         label: "Detecting passkey support…", Screen: SkeletonLoaderScreen },
+  { id: "passkey-creation", label: "Passkey creation", Screen: PasskeyCreationScreen },
+  { id: "success-passkey",  label: "Success",          Screen: SuccessPasskeyScreen },
 ];
 
 const SCENARIOS = [
@@ -21,9 +23,9 @@ const SCENARIOS = [
   { id: "S6", href: "/passkeysignup/scenario-6" },
 ];
 
-const ACTIVE = "S3";
+const ACTIVE = "S2";
 
-export default function Scenario3() {
+export default function Scenario2() {
   const [step, setStep] = useState(0);
 
   const { label, Screen } = STEPS[step];

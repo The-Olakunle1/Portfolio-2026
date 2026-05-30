@@ -8,7 +8,7 @@ interface Props {
   onPassword?: () => void;
 }
 
-export default function PasskeyCancelledScreen({ onTryAgain, onPassword }: Props) {
+export default function PasskeyFailedScreen({ onTryAgain, onPassword }: Props) {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -22,25 +22,22 @@ export default function PasskeyCancelledScreen({ onTryAgain, onPassword }: Props
 
         {/* Icon + text */}
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-
-          {/* Icon */}
           <img
-            src="/passkey-cancelled-icon.svg"
+            src="/passkey-failed-icon.svg"
             alt=""
             width={80}
             height={80}
             style={{ display: "block" }}
           />
 
-          {/* Heading + body */}
           <div style={{ display: "flex", flexDirection: "column", gap: 12, letterSpacing: "-0.25px" }}>
             <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 24, fontWeight: 700, lineHeight: "32px", color: "#1a1917", margin: 0 }}>
-              Passkey set up was cancelled
+              Passkey setup didn&apos;t complete
             </p>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-end" }}>
               <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 16, fontWeight: 400, lineHeight: 1.4, color: "#7c7770", margin: 0, width: "100%" }}>
-                No problem, you can set up your passkey again or use a password instead.
+                Something went wrong on our end. You can try again or use a password instead.
               </p>
               <button
                 onClick={() => setShowModal(true)}

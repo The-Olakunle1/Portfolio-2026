@@ -6,11 +6,13 @@ import WhatIsPasskeyModal from "./WhatIsPasskeyModal";
 interface Props {
   onNext?: () => void;
   onCancel?: () => void;
+  onFail?: () => void;
   username?: string;
-  autoTrigger?: boolean; // fire the passkey prompt immediately on mount
+  autoTrigger?: boolean;  // fire the passkey prompt immediately on mount
+  simulateFail?: boolean; // skip real WebAuthn and simulate an error instead
 }
 
-export default function PasskeyCreationScreen({ onNext, onCancel, username = "JaneDoe", autoTrigger = false }: Props) {
+export default function PasskeyCreationScreen({ onNext, onCancel, onFail, username = "JaneDoe", autoTrigger = false, simulateFail = false }: Props) {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -22,6 +24,12 @@ export default function PasskeyCreationScreen({ onNext, onCancel, username = "Ja
   async function handleSetupPasskey() {
     setLoading(true);
     try {
+      if (simulateFail) {
+        // Simulate a short delay then throw a generic failure for S6
+        await new Promise(res => setTimeout(res, 1500));
+        throw new Error("SimulatedFailure");
+      }
+
       const challenge = crypto.getRandomValues(new Uint8Array(32));
       const userId = crypto.getRandomValues(new Uint8Array(16));
 
@@ -43,13 +51,14 @@ export default function PasskeyCreationScreen({ onNext, onCancel, username = "Ja
         },
       });
 
-      // Success — advance to next screen
       onNext?.();
     } catch (err: unknown) {
-      // User cancelled or device denied
       const name = err instanceof Error ? err.name : "";
       if (name === "NotAllowedError") {
         onCancel?.();
+      } else {
+        // Generic failure (timeout, device error, simulated)
+        onFail?.();
       }
     } finally {
       setLoading(false);

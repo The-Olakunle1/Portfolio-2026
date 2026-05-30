@@ -19,6 +19,7 @@ const SCENARIOS = [
   { id: "S3", href: "/passkeysignup/scenario-3" },
   { id: "S4", href: "/passkeysignup/scenario-4" },
   { id: "S5", href: "/passkeysignup/scenario-5" },
+  { id: "S6", href: "/passkeysignup/scenario-6" },
 ];
 
 const ACTIVE = "S5";
