@@ -25,10 +25,16 @@ const ACTIVE = "S5";
 
 export default function Scenario5() {
   const [step, setStep] = useState(0);
+  const [autoTrigger, setAutoTrigger] = useState(false);
 
   const isFirst = step === 0;
   const isLast  = step === STEP_IDS.length - 1;
   const label   = STEP_LABELS[STEP_IDS[step]];
+
+  function handleTryAgain() {
+    setAutoTrigger(true);
+    setStep(1);
+  }
 
   function renderScreen() {
     switch (STEP_IDS[step]) {
@@ -37,14 +43,16 @@ export default function Scenario5() {
       case "passkey-creation":
         return (
           <PasskeyCreationScreen
+            key={autoTrigger ? "retry" : "first"}
             onNext={() => setStep(s => s + 1)}
-            onCancel={() => setStep(2)}
+            onCancel={() => { setAutoTrigger(false); setStep(2); }}
+            autoTrigger={autoTrigger}
           />
         );
       case "cancelled":
         return (
           <PasskeyCancelledScreen
-            onTryAgain={() => setStep(1)}
+            onTryAgain={handleTryAgain}
           />
         );
     }
