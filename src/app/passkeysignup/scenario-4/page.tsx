@@ -42,7 +42,6 @@ export default function Scenario4() {
       case "skeleton":
         return (
           <SkeletonLoaderScreen
-            onNext={() => setStep(PASSWORD_STEP)}      // auto-advance → password
             onPassword={() => setStep(PASSWORD_STEP)}  // "Use a password instead" → password
           />
         );
