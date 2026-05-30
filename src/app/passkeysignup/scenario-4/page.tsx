@@ -4,11 +4,14 @@ import { useState } from "react";
 import Link from "next/link";
 import UsernameScreen from "../screens/UsernameScreen";
 import SkeletonLoaderScreen from "../screens/SkeletonLoaderScreen";
+import PasswordCreationScreen from "../screens/PasswordCreationScreen";
 
-const STEPS = [
-  { id: "username", label: "Username entry",              Screen: UsernameScreen },
-  { id: "skeleton", label: "Detecting passkey support…",  Screen: SkeletonLoaderScreen },
-];
+const STEP_IDS = ["username", "skeleton", "password-creation"] as const;
+const STEP_LABELS: Record<typeof STEP_IDS[number], string> = {
+  "username":          "Username entry",
+  "skeleton":          "Detecting passkey support…",
+  "password-creation": "Password creation",
+};
 
 const SCENARIOS = [
   { id: "S1", href: "/passkeysignup/scenario-1" },
@@ -20,19 +23,37 @@ const SCENARIOS = [
 
 const ACTIVE = "S4";
 
+const PASSWORD_STEP = 2; // index of PasswordCreationScreen
+
 export default function Scenario4() {
   const [step, setStep] = useState(0);
 
-  const { label, Screen } = STEPS[step];
   const isFirst = step === 0;
-  const isLast = step === STEPS.length - 1;
+  const isLast  = step === STEP_IDS.length - 1;
+  const label   = STEP_LABELS[STEP_IDS[step]];
+
+  function renderScreen() {
+    switch (STEP_IDS[step]) {
+      case "username":
+        return <UsernameScreen onNext={() => setStep(1)} />;
+      case "skeleton":
+        return (
+          <SkeletonLoaderScreen
+            onNext={() => setStep(PASSWORD_STEP)}      // auto-advance → password
+            onPassword={() => setStep(PASSWORD_STEP)}  // "Use a password instead" → password
+          />
+        );
+      case "password-creation":
+        return <PasswordCreationScreen />;
+    }
+  }
 
   return (
     <div style={{ position: "relative", width: "100vw", height: "100vh", overflow: "hidden" }}>
 
       {/* Full-page screen */}
       <div style={{ width: "100%", height: "100%" }}>
-        <Screen onNext={isLast ? undefined : () => setStep(s => s + 1)} />
+        {renderScreen()}
       </div>
 
       {/* Floating prototype bar */}
@@ -63,7 +84,7 @@ export default function Scenario4() {
           ← Back
         </button>
 
-        <span style={{ fontSize: 12, color: "#aaa" }}>{step + 1}/{STEPS.length}</span>
+        <span style={{ fontSize: 12, color: "#aaa" }}>{step + 1}/{STEP_IDS.length}</span>
 
         <button disabled={isLast} onClick={() => setStep(s => s + 1)}
           style={{ padding: "5px 12px", borderRadius: 100, fontSize: 12, fontWeight: 500, background: isLast ? "transparent" : "#111", border: "none", cursor: isLast ? "default" : "pointer", color: isLast ? "#aaa" : "#fff", opacity: isLast ? 0.5 : 1 }}>
