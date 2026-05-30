@@ -768,6 +768,20 @@ body {
   }
 }
 
+/* Passkey prototype — grid background */
+.passkey-grid {
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
+}
+
+@media (max-width: 768px) {
+  .passkey-grid {
+    /* Fade out much sooner so the grid stays above the content area */
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 35%);
+    mask-image: linear-gradient(to bottom, black 0%, transparent 35%);
+  }
+}
+
 @media (max-width: 600px) {
   .infinite-canvas {
     padding-left: 16px;
