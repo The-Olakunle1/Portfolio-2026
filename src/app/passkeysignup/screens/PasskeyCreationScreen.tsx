@@ -71,7 +71,7 @@ export default function PasskeyCreationScreen({ onNext, onCancel, onFail, userna
       <GridBackground />
 
       {/* Content */}
-      <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: 40, width: 514 }}>
+      <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: 40, width: "min(514px, calc(100% - 48px))" }}>
 
         {/* Top section */}
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -125,7 +125,7 @@ export default function PasskeyCreationScreen({ onNext, onCancel, onFail, userna
         </div>
 
         {/* Buttons */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 12, width: 377, alignSelf: "center" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 12, width: "100%", maxWidth: 377, alignSelf: "center" }}>
           <button
             onClick={handleSetupPasskey}
             disabled={loading}

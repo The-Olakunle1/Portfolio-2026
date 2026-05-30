@@ -73,7 +73,7 @@ export default function Scenario5() {
         background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)",
         border: "1px solid #e5e5e5", borderRadius: 100,
         padding: "8px 12px", display: "flex", alignItems: "center", gap: 8,
-        boxShadow: "0 2px 12px rgba(0,0,0,0.08)", zIndex: 200,
+        boxShadow: "0 2px 12px rgba(0,0,0,0.08)", zIndex: 200, maxWidth: "calc(100vw - 32px)", overflowX: "auto",
         fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
         whiteSpace: "nowrap",
       }}>

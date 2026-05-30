@@ -17,13 +17,13 @@ export default function UsernameScreen({ onNext }: Props) {
       <GridBackground />
 
       {/* Form */}
-      <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: 40, width: 458 }}>
+      <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: 40, width: "min(458px, calc(100% - 48px))" }}>
 
         {/* Icon + heading */}
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           <AccountIcon />
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 12, width: 379 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12, width: "100%" }}>
             <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 24, fontWeight: 700, lineHeight: "32px", letterSpacing: "-0.25px", color: "#1a1917", margin: 0 }}>
               Create your username
             </p>
@@ -62,7 +62,7 @@ export default function UsernameScreen({ onNext }: Props) {
         </div>
 
         {/* Button */}
-        <div style={{ paddingLeft: 40, paddingRight: 40 }}>
+        <div style={{ width: "100%", maxWidth: 377, alignSelf: "center" }}>
           <button
             onClick={onNext}
             style={{

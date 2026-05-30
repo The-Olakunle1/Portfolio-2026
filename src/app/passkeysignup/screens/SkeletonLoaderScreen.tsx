@@ -46,7 +46,7 @@ export default function SkeletonLoaderScreen({ onNext, onPassword }: Props) {
         <GridBackground />
 
         {/* Skeleton content */}
-        <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: 40, width: 514 }}>
+        <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: 40, width: "min(514px, calc(100% - 48px))" }}>
 
           {/* Top section */}
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -63,7 +63,7 @@ export default function SkeletonLoaderScreen({ onNext, onPassword }: Props) {
 
                 {/* Body lines */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-end" }}>
-                  <div style={{ height: 88, width: 514, position: "relative" }}>
+                  <div style={{ height: 88, width: "100%", position: "relative" }}>
                     <Bar width={514} height={12.8} top={8.8} />
                     <Bar width={514} height={12.8} top={28} />
                     <Bar width={514} height={12.8} top={47.2} />
@@ -107,7 +107,7 @@ export default function SkeletonLoaderScreen({ onNext, onPassword }: Props) {
           </div>
 
           {/* Buttons */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 12, width: 377, alignSelf: "center" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12, width: "100%", maxWidth: 377, alignSelf: "center" }}>
             {/* Primary button skeleton */}
             <div className="sk-shimmer" style={{ width: "100%", height: 40, background: SHIMMER, borderRadius: 9999 }} />
 

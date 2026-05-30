@@ -18,7 +18,7 @@ export default function PasskeyFailedScreen({ onTryAgain, onPassword }: Props) {
       <GridBackground />
 
       {/* Content */}
-      <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: 40, width: 514 }}>
+      <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: 40, width: "min(514px, calc(100% - 48px))" }}>
 
         {/* Icon + text */}
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -50,7 +50,7 @@ export default function PasskeyFailedScreen({ onTryAgain, onPassword }: Props) {
         </div>
 
         {/* Buttons */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 12, width: 377, alignSelf: "center" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 12, width: "100%", maxWidth: 377, alignSelf: "center" }}>
           <button
             onClick={onTryAgain}
             style={{ width: "100%", height: 40, background: "#0f172a", color: "#fff", fontFamily: "'Inter', sans-serif", fontSize: 14, fontWeight: 500, lineHeight: "24px", border: "none", borderRadius: 9999, cursor: "pointer" }}
