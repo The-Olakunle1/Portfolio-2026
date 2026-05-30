@@ -4,11 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 import UsernameScreen from "../screens/UsernameScreen";
 import PasskeyCreationScreen from "../screens/PasskeyCreationScreen";
+import PasskeyCancelledScreen from "../screens/PasskeyCancelledScreen";
 
-const STEP_IDS = ["username", "passkey-creation"] as const;
+const STEP_IDS = ["username", "passkey-creation", "cancelled"] as const;
 const STEP_LABELS: Record<typeof STEP_IDS[number], string> = {
   "username":         "Username entry",
   "passkey-creation": "Passkey creation",
+  "cancelled":        "Passkey cancelled",
 };
 
 const SCENARIOS = [
@@ -33,7 +35,18 @@ export default function Scenario5() {
       case "username":
         return <UsernameScreen onNext={() => setStep(1)} />;
       case "passkey-creation":
-        return <PasskeyCreationScreen onNext={() => setStep(s => s + 1)} />;
+        return (
+          <PasskeyCreationScreen
+            onNext={() => setStep(s => s + 1)}
+            onCancel={() => setStep(2)}
+          />
+        );
+      case "cancelled":
+        return (
+          <PasskeyCancelledScreen
+            onTryAgain={() => setStep(1)}
+          />
+        );
     }
   }
 
