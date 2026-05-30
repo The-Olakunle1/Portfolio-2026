@@ -45,7 +45,7 @@ export default function Scenario6() {
         return (
           <PasskeyCreationScreen
             key={autoTrigger ? "retry" : "first"}
-            simulateFail
+            autoAbort={2000}
             autoTrigger={autoTrigger}
             onFail={() => { setAutoTrigger(false); setStep(2); }}
           />

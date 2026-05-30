@@ -10,11 +10,11 @@ interface Props {
   onCancel?: () => void;
   onFail?: () => void;
   username?: string;
-  autoTrigger?: boolean;  // fire the passkey prompt immediately on mount
-  simulateFail?: boolean; // skip real WebAuthn and simulate an error instead
+  autoTrigger?: boolean; // fire the passkey prompt immediately on mount
+  autoAbort?: number;    // ms after which to auto-abort the native prompt → onFail
 }
 
-export default function PasskeyCreationScreen({ onNext, onCancel, onFail, username = "JaneDoe", autoTrigger = false, simulateFail = false }: Props) {
+export default function PasskeyCreationScreen({ onNext, onCancel, onFail, username = "JaneDoe", autoTrigger = false, autoAbort }: Props) {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -25,15 +25,17 @@ export default function PasskeyCreationScreen({ onNext, onCancel, onFail, userna
 
   async function handleSetupPasskey() {
     setLoading(true);
-    try {
-      if (simulateFail) {
-        // Simulate a short delay then throw a generic failure for S6
-        await new Promise(res => setTimeout(res, 1500));
-        throw new Error("SimulatedFailure");
-      }
 
+    // Optional auto-abort: show the real native modal then dismiss it after a delay
+    const controller = autoAbort !== undefined ? new AbortController() : null;
+    let abortTimer: ReturnType<typeof setTimeout> | null = null;
+    if (controller && autoAbort !== undefined) {
+      abortTimer = setTimeout(() => controller.abort(), autoAbort);
+    }
+
+    try {
       const challenge = crypto.getRandomValues(new Uint8Array(32));
-      const userId = crypto.getRandomValues(new Uint8Array(16));
+      const userId    = crypto.getRandomValues(new Uint8Array(16));
 
       await navigator.credentials.create({
         publicKey: {
@@ -51,18 +53,23 @@ export default function PasskeyCreationScreen({ onNext, onCancel, onFail, userna
           },
           timeout: 60000,
         },
+        ...(controller ? { signal: controller.signal } : {}),
       });
 
       onNext?.();
     } catch (err: unknown) {
       const name = err instanceof Error ? err.name : "";
-      if (name === "NotAllowedError") {
+      if (name === "AbortError") {
+        // Programmatic abort (auto-abort) → treat as failure/timeout
+        onFail?.();
+      } else if (name === "NotAllowedError") {
+        // User explicitly cancelled the native prompt
         onCancel?.();
       } else {
-        // Generic failure (timeout, device error, simulated)
         onFail?.();
       }
     } finally {
+      if (abortTimer) clearTimeout(abortTimer);
       setLoading(false);
     }
   }

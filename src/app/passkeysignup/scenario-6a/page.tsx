@@ -3,64 +3,62 @@
 import { useState } from "react";
 import Link from "next/link";
 import UsernameScreen from "../screens/UsernameScreen";
-import SkeletonLoaderScreen from "../screens/SkeletonLoaderScreen";
-import PasswordCreationScreen from "../screens/PasswordCreationScreen";
-import SuccessPasswordScreen from "../screens/SuccessPasswordScreen";
+import PasskeyCreationScreen from "../screens/PasskeyCreationScreen";
+import PasskeyFailedScreen from "../screens/PasskeyFailedScreen";
 
-const STEP_IDS = ["username", "skeleton", "password-creation", "success"] as const;
+const STEP_IDS = ["username", "passkey-creation", "failed"] as const;
 const STEP_LABELS: Record<typeof STEP_IDS[number], string> = {
-  "username":          "Username entry",
-  "skeleton":          "Detecting passkey support…",
-  "password-creation": "Password creation",
-  "success":           "Account created",
+  "username":         "Username entry",
+  "passkey-creation": "Passkey creation",
+  "failed":           "Passkey failed",
 };
 
 const SCENARIOS = [
-  { id: "S1", href: "/passkeysignup/scenario-1" },
-  { id: "S2", href: "/passkeysignup/scenario-2" },
-  { id: "S3", href: "/passkeysignup/scenario-3" },
-  { id: "S4", href: "/passkeysignup/scenario-4" },
-  { id: "S5", href: "/passkeysignup/scenario-5" },
+  { id: "S1",  href: "/passkeysignup/scenario-1" },
+  { id: "S2",  href: "/passkeysignup/scenario-2" },
+  { id: "S3",  href: "/passkeysignup/scenario-3" },
+  { id: "S4",  href: "/passkeysignup/scenario-4" },
+  { id: "S5",  href: "/passkeysignup/scenario-5" },
   { id: "S6A", href: "/passkeysignup/scenario-6a" },
   { id: "S6B", href: "/passkeysignup/scenario-6b" },
 ];
 
-const ACTIVE = "S4";
+const ACTIVE = "S6A";
 
-const PASSWORD_STEP = 2; // index of PasswordCreationScreen
-const SUCCESS_STEP  = 3; // index of SuccessPasswordScreen
-
-export default function Scenario4() {
+export default function Scenario6A() {
   const [step, setStep] = useState(0);
+  const [autoTrigger, setAutoTrigger] = useState(false);
 
   const isFirst = step === 0;
   const isLast  = step === STEP_IDS.length - 1;
   const label   = STEP_LABELS[STEP_IDS[step]];
 
+  function handleTryAgain() {
+    setAutoTrigger(true);
+    setStep(1);
+  }
+
   function renderScreen() {
     switch (STEP_IDS[step]) {
       case "username":
         return <UsernameScreen onNext={() => setStep(1)} />;
-      case "skeleton":
+      case "passkey-creation":
         return (
-          <SkeletonLoaderScreen
-            onPassword={() => setStep(PASSWORD_STEP)}  // "Use a password instead" → password
+          <PasskeyCreationScreen
+            key={autoTrigger ? "retry" : "first"}
+            autoAbort={2000}
+            autoTrigger={autoTrigger}
+            onFail={() => { setAutoTrigger(false); setStep(2); }}
           />
         );
-      case "password-creation":
-        return <PasswordCreationScreen onNext={() => setStep(SUCCESS_STEP)} />;
-      case "success":
-        return <SuccessPasswordScreen />;
+      case "failed":
+        return <PasskeyFailedScreen onTryAgain={handleTryAgain} />;
     }
   }
 
   return (
     <div style={{ position: "relative", width: "100vw", height: "100vh", overflow: "hidden" }}>
-
-      {/* Full-page screen */}
-      <div style={{ width: "100%", height: "100%" }}>
-        {renderScreen()}
-      </div>
+      <div style={{ width: "100%", height: "100%" }}>{renderScreen()}</div>
 
       {/* Floating prototype bar */}
       <div style={{
@@ -78,20 +76,14 @@ export default function Scenario4() {
             background: s.id === ACTIVE ? "#111" : "transparent",
             color: s.id === ACTIVE ? "#fff" : "#666",
             textDecoration: "none",
-          }}>
-            {s.id}
-          </Link>
+          }}>{s.id}</Link>
         ))}
-
         <div style={{ width: 1, height: 16, background: "#e5e5e5", margin: "0 4px" }} />
-
         <button disabled={isFirst} onClick={() => setStep(s => s - 1)}
           style={{ padding: "5px 12px", borderRadius: 100, fontSize: 12, fontWeight: 500, background: "none", border: "none", cursor: isFirst ? "default" : "pointer", color: "#666", opacity: isFirst ? 0.3 : 1 }}>
           ← Back
         </button>
-
         <span style={{ fontSize: 12, color: "#aaa" }}>{step + 1}/{STEP_IDS.length}</span>
-
         <button disabled={isLast} onClick={() => setStep(s => s + 1)}
           style={{ padding: "5px 12px", borderRadius: 100, fontSize: 12, fontWeight: 500, background: isLast ? "transparent" : "#111", border: "none", cursor: isLast ? "default" : "pointer", color: isLast ? "#aaa" : "#fff", opacity: isLast ? 0.5 : 1 }}>
           Next →
@@ -104,9 +96,7 @@ export default function Scenario4() {
         fontSize: 11, color: "#aaa", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
         background: "rgba(255,255,255,0.8)", backdropFilter: "blur(8px)",
         padding: "4px 12px", borderRadius: 100, border: "1px solid #ebebeb",
-      }}>
-        {label}
-      </div>
+      }}>{label}</div>
     </div>
   );
 }
