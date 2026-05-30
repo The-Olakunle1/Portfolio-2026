@@ -35,14 +35,10 @@ export default function WhatIsPasskeyModal({ onClose }: Props) {
           </p>
 
           {/* Intro */}
-          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 400, lineHeight: 1.4, letterSpacing: "-0.25px", color: "#474440", width: "100%" }}>
-            <p style={{ margin: "0 0 0 0" }}>
-              A passkey is a modern alternative to a password. Instead of typing something in, you confirm it&apos;s you the same way you unlock your phone or computer, with your face, fingerprint, or device PIN.
-            </p>
-            <p style={{ margin: "6px 0 0 0" }}>
-              It&apos;s faster, more secure, and there&apos;s nothing to remember or reset.
-            </p>
-          </div>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 400, lineHeight: 1.4, letterSpacing: "-0.25px", color: "#474440", width: "100%", margin: 0 }}>
+            A passkey is a modern alternative to a password. Instead of typing something in, you confirm it&apos;s you the same way you unlock your phone or computer, with your face, fingerprint, or device PIN.
+            {" "}It&apos;s faster, more secure, and there&apos;s nothing to remember or reset.
+          </p>
 
           {/* How passkeys work */}
           <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 600, lineHeight: 1.4, letterSpacing: "-0.25px", color: "#474440", margin: 0, width: "100%" }}>
@@ -54,15 +50,12 @@ export default function WhatIsPasskeyModal({ onClose }: Props) {
               Tap <strong style={{ fontWeight: 500 }}>&apos;Set up passkey&apos;</strong> and your browser or device will guide you through a quick setup.
             </li>
             <li>
-              Next time you sign in, just use your face, fingerprint, or PIN — no typing required.
+              Next time you sign in, just use your face, fingerprint, or PIN, no typing required.
             </li>
             <li>
               Your passkey is stored securely on your device and never shared.
             </li>
           </ul>
-
-          {/* Spacer */}
-          <div style={{ height: 24 }} />
 
           {/* Got it button */}
           <button
