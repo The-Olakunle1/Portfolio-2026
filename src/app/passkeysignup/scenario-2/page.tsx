@@ -6,40 +6,64 @@ import UsernameScreen from "../screens/UsernameScreen";
 import SkeletonLoaderScreen from "../screens/SkeletonLoaderScreen";
 import PasskeyCreationScreen from "../screens/PasskeyCreationScreen";
 import SuccessPasskeyScreen from "../screens/SuccessPasskeyScreen";
+import PasswordCreationScreen from "../screens/PasswordCreationScreen";
+import SuccessPasswordScreen from "../screens/SuccessPasswordScreen";
 
-const STEPS = [
-  { id: "username",         label: "Username entry",  Screen: UsernameScreen },
-  { id: "skeleton",         label: "Detecting passkey support…", Screen: SkeletonLoaderScreen },
-  { id: "passkey-creation", label: "Passkey creation", Screen: PasskeyCreationScreen },
-  { id: "success-passkey",  label: "Success",          Screen: SuccessPasskeyScreen },
-];
+const STEP_IDS = ["username", "skeleton", "passkey-creation", "success-passkey", "password-creation", "success-password"] as const;
+const STEP_LABELS: Record<typeof STEP_IDS[number], string> = {
+  "username":          "Username entry",
+  "skeleton":          "Detecting passkey support…",
+  "passkey-creation":  "Passkey creation",
+  "success-passkey":   "Success",
+  "password-creation": "Password creation",
+  "success-password":  "Account created",
+};
 
 const SCENARIOS = [
-  { id: "S1", href: "/passkeysignup/scenario-1" },
-  { id: "S2", href: "/passkeysignup/scenario-2" },
-  { id: "S3", href: "/passkeysignup/scenario-3" },
-  { id: "S4", href: "/passkeysignup/scenario-4" },
-  { id: "S5", href: "/passkeysignup/scenario-5" },
+  { id: "S1",  href: "/passkeysignup/scenario-1" },
+  { id: "S2",  href: "/passkeysignup/scenario-2" },
+  { id: "S3",  href: "/passkeysignup/scenario-3" },
+  { id: "S4",  href: "/passkeysignup/scenario-4" },
+  { id: "S5",  href: "/passkeysignup/scenario-5" },
   { id: "S6A", href: "/passkeysignup/scenario-6a" },
   { id: "S6B", href: "/passkeysignup/scenario-6b" },
 ];
 
 const ACTIVE = "S2";
+const PASSWORD_STEP = 4;
 
 export default function Scenario2() {
   const [step, setStep] = useState(0);
 
-  const { label, Screen } = STEPS[step];
   const isFirst = step === 0;
-  const isLast = step === STEPS.length - 1;
+  const isLast  = step === STEP_IDS.length - 1;
+  const label   = STEP_LABELS[STEP_IDS[step]];
+
+  function renderScreen() {
+    switch (STEP_IDS[step]) {
+      case "username":
+        return <UsernameScreen onNext={() => setStep(1)} />;
+      case "skeleton":
+        return <SkeletonLoaderScreen onNext={() => setStep(2)} />;
+      case "passkey-creation":
+        return (
+          <PasskeyCreationScreen
+            onNext={() => setStep(3)}
+            onPassword={() => setStep(PASSWORD_STEP)}
+          />
+        );
+      case "success-passkey":
+        return <SuccessPasskeyScreen />;
+      case "password-creation":
+        return <PasswordCreationScreen onNext={() => setStep(5)} />;
+      case "success-password":
+        return <SuccessPasswordScreen />;
+    }
+  }
 
   return (
     <div style={{ position: "relative", width: "100vw", height: "100vh", overflow: "hidden" }}>
-
-      {/* Full-page screen */}
-      <div style={{ width: "100%", height: "100%" }}>
-        <Screen onNext={isLast ? undefined : () => setStep(s => s + 1)} />
-      </div>
+      <div style={{ width: "100%", height: "100%" }}>{renderScreen()}</div>
 
       {/* Floating prototype bar */}
       <div style={{
@@ -57,20 +81,14 @@ export default function Scenario2() {
             background: s.id === ACTIVE ? "#111" : "transparent",
             color: s.id === ACTIVE ? "#fff" : "#666",
             textDecoration: "none",
-          }}>
-            {s.id}
-          </Link>
+          }}>{s.id}</Link>
         ))}
-
         <div style={{ width: 1, height: 16, background: "#e5e5e5", margin: "0 4px" }} />
-
         <button disabled={isFirst} onClick={() => setStep(s => s - 1)}
           style={{ padding: "5px 12px", borderRadius: 100, fontSize: 12, fontWeight: 500, background: "none", border: "none", cursor: isFirst ? "default" : "pointer", color: "#666", opacity: isFirst ? 0.3 : 1 }}>
           ← Back
         </button>
-
-        <span style={{ fontSize: 12, color: "#aaa" }}>{step + 1}/{STEPS.length}</span>
-
+        <span style={{ fontSize: 12, color: "#aaa" }}>{step + 1}/{STEP_IDS.length}</span>
         <button disabled={isLast} onClick={() => setStep(s => s + 1)}
           style={{ padding: "5px 12px", borderRadius: 100, fontSize: 12, fontWeight: 500, background: isLast ? "transparent" : "#111", border: "none", cursor: isLast ? "default" : "pointer", color: isLast ? "#aaa" : "#fff", opacity: isLast ? 0.5 : 1 }}>
           Next →
@@ -83,9 +101,7 @@ export default function Scenario2() {
         fontSize: 11, color: "#aaa", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
         background: "rgba(255,255,255,0.8)", backdropFilter: "blur(8px)",
         padding: "4px 12px", borderRadius: 100, border: "1px solid #ebebeb",
-      }}>
-        {label}
-      </div>
+      }}>{label}</div>
     </div>
   );
 }

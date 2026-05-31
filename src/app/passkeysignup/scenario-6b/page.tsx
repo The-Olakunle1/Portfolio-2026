@@ -5,13 +5,19 @@ import Link from "next/link";
 import UsernameScreen from "../screens/UsernameScreen";
 import PasskeyCreationScreen from "../screens/PasskeyCreationScreen";
 import PasskeyTimedOutScreen from "../screens/PasskeyTimedOutScreen";
+import PasswordCreationScreen from "../screens/PasswordCreationScreen";
+import SuccessPasswordScreen from "../screens/SuccessPasswordScreen";
 
-const STEP_IDS = ["username", "passkey-creation", "timed-out"] as const;
+const STEP_IDS = ["username", "passkey-creation", "timed-out", "password-creation", "success-password"] as const;
 const STEP_LABELS: Record<typeof STEP_IDS[number], string> = {
-  "username":         "Username entry",
-  "passkey-creation": "Passkey creation",
-  "timed-out":        "Passkey timed out",
+  "username":          "Username entry",
+  "passkey-creation":  "Passkey creation",
+  "timed-out":         "Passkey timed out",
+  "password-creation": "Password creation",
+  "success-password":  "Account created",
 };
+
+const PASSWORD_STEP = 3;
 
 const SCENARIOS = [
   { id: "S1",  href: "/passkeysignup/scenario-1" },
@@ -49,10 +55,20 @@ export default function Scenario6B() {
             autoAbort={8000}
             autoTrigger={autoTrigger}
             onFail={() => { setAutoTrigger(false); setStep(2); }}
+            onPassword={() => { setAutoTrigger(false); setStep(PASSWORD_STEP); }}
           />
         );
       case "timed-out":
-        return <PasskeyTimedOutScreen onTryAgain={handleTryAgain} />;
+        return (
+          <PasskeyTimedOutScreen
+            onTryAgain={handleTryAgain}
+            onPassword={() => setStep(PASSWORD_STEP)}
+          />
+        );
+      case "password-creation":
+        return <PasswordCreationScreen onNext={() => setStep(4)} />;
+      case "success-password":
+        return <SuccessPasswordScreen />;
     }
   }
 

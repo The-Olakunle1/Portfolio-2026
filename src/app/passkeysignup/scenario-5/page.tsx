@@ -5,13 +5,19 @@ import Link from "next/link";
 import UsernameScreen from "../screens/UsernameScreen";
 import PasskeyCreationScreen from "../screens/PasskeyCreationScreen";
 import PasskeyCancelledScreen from "../screens/PasskeyCancelledScreen";
+import PasswordCreationScreen from "../screens/PasswordCreationScreen";
+import SuccessPasswordScreen from "../screens/SuccessPasswordScreen";
 
-const STEP_IDS = ["username", "passkey-creation", "cancelled"] as const;
+const STEP_IDS = ["username", "passkey-creation", "cancelled", "password-creation", "success-password"] as const;
 const STEP_LABELS: Record<typeof STEP_IDS[number], string> = {
-  "username":         "Username entry",
-  "passkey-creation": "Passkey creation",
-  "cancelled":        "Passkey cancelled",
+  "username":          "Username entry",
+  "passkey-creation":  "Passkey creation",
+  "cancelled":         "Passkey cancelled",
+  "password-creation": "Password creation",
+  "success-password":  "Account created",
 };
+
+const PASSWORD_STEP = 3;
 
 const SCENARIOS = [
   { id: "S1", href: "/passkeysignup/scenario-1" },
@@ -48,6 +54,7 @@ export default function Scenario5() {
             key={autoTrigger ? "retry" : "first"}
             onNext={() => setStep(s => s + 1)}
             onCancel={() => { setAutoTrigger(false); setStep(2); }}
+            onPassword={() => { setAutoTrigger(false); setStep(PASSWORD_STEP); }}
             autoTrigger={autoTrigger}
           />
         );
@@ -55,8 +62,13 @@ export default function Scenario5() {
         return (
           <PasskeyCancelledScreen
             onTryAgain={handleTryAgain}
+            onPassword={() => setStep(PASSWORD_STEP)}
           />
         );
+      case "password-creation":
+        return <PasswordCreationScreen onNext={() => setStep(4)} />;
+      case "success-password":
+        return <SuccessPasswordScreen />;
     }
   }
 

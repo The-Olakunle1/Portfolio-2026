@@ -9,12 +9,13 @@ interface Props {
   onNext?: () => void;
   onCancel?: () => void;
   onFail?: () => void;
+  onPassword?: () => void;
   username?: string;
   autoTrigger?: boolean; // fire the passkey prompt immediately on mount
   autoAbort?: number;    // ms after which to auto-abort the native prompt → onFail
 }
 
-export default function PasskeyCreationScreen({ onNext, onCancel, onFail, username = "JaneDoe", autoTrigger = false, autoAbort }: Props) {
+export default function PasskeyCreationScreen({ onNext, onCancel, onFail, onPassword, username = "JaneDoe", autoTrigger = false, autoAbort }: Props) {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -143,6 +144,7 @@ export default function PasskeyCreationScreen({ onNext, onCancel, onFail, userna
             {loading ? "Waiting…" : "Set up passkey"}
           </button>
           <button
+            onClick={onPassword}
             style={{ width: "100%", height: 40, background: "transparent", color: "#0f172a", fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 500, lineHeight: "24px", border: "none", borderRadius: 9999, cursor: "pointer" }}
           >
             Use a password instead

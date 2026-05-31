@@ -5,13 +5,19 @@ import Link from "next/link";
 import UsernameScreen from "../screens/UsernameScreen";
 import PasskeyCreationScreen from "../screens/PasskeyCreationScreen";
 import PasskeyFailedScreen from "../screens/PasskeyFailedScreen";
+import PasswordCreationScreen from "../screens/PasswordCreationScreen";
+import SuccessPasswordScreen from "../screens/SuccessPasswordScreen";
 
-const STEP_IDS = ["username", "passkey-creation", "failed"] as const;
+const STEP_IDS = ["username", "passkey-creation", "failed", "password-creation", "success-password"] as const;
 const STEP_LABELS: Record<typeof STEP_IDS[number], string> = {
-  "username":         "Username entry",
-  "passkey-creation": "Passkey creation",
-  "failed":           "Passkey failed",
+  "username":          "Username entry",
+  "passkey-creation":  "Passkey creation",
+  "failed":            "Passkey failed",
+  "password-creation": "Password creation",
+  "success-password":  "Account created",
 };
+
+const PASSWORD_STEP = 3;
 
 const SCENARIOS = [
   { id: "S1",  href: "/passkeysignup/scenario-1" },
@@ -49,10 +55,20 @@ export default function Scenario6A() {
             autoAbort={2000}
             autoTrigger={autoTrigger}
             onFail={() => { setAutoTrigger(false); setStep(2); }}
+            onPassword={() => { setAutoTrigger(false); setStep(PASSWORD_STEP); }}
           />
         );
       case "failed":
-        return <PasskeyFailedScreen onTryAgain={handleTryAgain} />;
+        return (
+          <PasskeyFailedScreen
+            onTryAgain={handleTryAgain}
+            onPassword={() => setStep(PASSWORD_STEP)}
+          />
+        );
+      case "password-creation":
+        return <PasswordCreationScreen onNext={() => setStep(4)} />;
+      case "success-password":
+        return <SuccessPasswordScreen />;
     }
   }
 
