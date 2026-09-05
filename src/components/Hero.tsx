@@ -13,7 +13,6 @@ const EMAIL = "Alabiolakunledaniel@gmail.com";
 
 const Hero = () => {
   const [copied, setCopied] = useState(false);
-  const [mpbPos, setMpbPos] = useState<{ x: number; y: number } | null>(null);
   const [swapPos, setSwapPos] = useState<{ x: number; y: number } | null>(null);
   const [calmPos, setCalmPos] = useState<{ x: number; y: number } | null>(null);
 
@@ -38,22 +37,7 @@ const Hero = () => {
   const bioParagraphs = [
     "I'm Olakunle, Product designer and design engineer experienced in building software experiences from concept to delivery, based in the UK.",
     "I am obsessed with the way the web works and crafting great and delightful user experiences for it.",
-    <>
-      Currently a Product Designer at{" "}
-      <a
-        href="https://www.mpb.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="hero-link"
-        onMouseEnter={(e) => setMpbPos({ x: e.clientX, y: e.clientY })}
-        onMouseMove={(e) => setMpbPos({ x: e.clientX, y: e.clientY })}
-        onMouseLeave={() => setMpbPos(null)}
-      >
-        MPB.com
-      </a>
-      ; the largest global platform to buy, sell and trade photo kit where I
-      help create solutions for over a million users across 13 countries.
-    </>,
+    "Currently a Founding Product Designer at Stealth. Previously at MPB.com.",
     <>
       I also co-founded{" "}
       <a
@@ -264,33 +248,6 @@ const Hero = () => {
         </motion.div>
       )}
 
-      {/* MPB hover image */}
-      {mpbPos && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.92 }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
-          style={{
-            position: "fixed",
-            top: mpbPos.y + 20,
-            left: mpbPos.x + 20,
-            width: 280,
-            borderRadius: 12,
-            overflow: "hidden",
-            pointerEvents: "none",
-            zIndex: 1000,
-            boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/MPB hover image.png"
-            alt="MPB.com"
-            style={{ width: "100%", height: "auto", display: "block" }}
-          />
-        </motion.div>
-      )}
     </>
   );
 };
